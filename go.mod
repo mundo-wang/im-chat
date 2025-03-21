@@ -1,8 +1,6 @@
 module im-chat
 
-go 1.21.0
-
-toolchain go1.21.8
+go 1.21.8
 
 require (
 	github.com/mundo-wang/wtool v1.0.3
