@@ -4,12 +4,15 @@ mysql:
   ip: "123.60.188.152"
   port: 3306
   dbName: "imchat"
+
 redis:
-  addr: "123.60.188.152:6379"
+  ip: "123.60.188.152"
+  port: 6379
   password: "F!9@L#4&X%7q*P6"
   DB: 0
   poolSize: 30
   minIdleConn: 30
+
 oss:
   Endpoint: "oss-cn-hangzhou.aliyuncs.com"
   AccessKeyId: "LTAI5tNCXPJwS3MstKoKgixh"
@@ -23,5 +26,5 @@ timeout:
   RedisOnlineTime: 4  #缓存的在线用户时长   单位H
 
 port:
-  server: ":8082"
+  server: 8280
   udp: 3001

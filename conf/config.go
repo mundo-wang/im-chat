@@ -17,7 +17,8 @@ type MySQLConfig struct {
 }
 
 type RedisConfig struct {
-	Addr        string `mapstructure:"addr"`
+	IP          string `mapstructure:"ip"`
+	Port        string `mapstructure:"port"`
 	Password    string `mapstructure:"password"`
 	DB          int    `mapstructure:"DB"`
 	PoolSize    int    `mapstructure:"poolSize"`
@@ -39,6 +40,6 @@ type TimeoutConfig struct {
 }
 
 type PortConfig struct {
-	Server string `mapstructure:"server"`
-	UDP    int    `mapstructure:"udp"`
+	Server int `mapstructure:"server"`
+	UDP    int `mapstructure:"udp"`
 }
