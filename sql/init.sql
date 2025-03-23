@@ -1,70 +1,85 @@
-CREATE TABLE communities (
-    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(255),
-    owner_id int unsigned DEFAULT NULL,
-    img varchar(255),
-    description varchar(255),
-    created_at datetime DEFAULT NULL,
-    updated_at datetime DEFAULT NULL,
-    deleted_at datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- noinspection SqlDialectInspectionForFile
 
-CREATE TABLE contact (
-    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    owner_id int unsigned DEFAULT NULL,
-    target_id int unsigned DEFAULT NULL,
-    type int DEFAULT NULL,
-    description varchar(255),
-    created_at datetime DEFAULT NULL,
-    updated_at datetime DEFAULT NULL,
-    deleted_at datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- noinspection SqlNoDataSourceInspectionForFile
 
-CREATE TABLE group_basic (
+CREATE TABLE users (
     id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(255),
-    owner_id int unsigned DEFAULT NULL,
-    icon varchar(255),
-    type int DEFAULT NULL,
-    description varchar(255),
-    created_at datetime DEFAULT NULL,
-    updated_at datetime DEFAULT NULL,
-    deleted_at datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE message (
-    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    form_id varchar(255),
-    target_id varchar(255),
-    type varchar(255),
-    media int DEFAULT NULL,
-    content varchar(255),
-    pic varchar(255),
-    url varchar(255),
-    description varchar(255),
-    amount int DEFAULT NULL,
-    created_at datetime DEFAULT NULL,
-    updated_at datetime DEFAULT NULL,
-    deleted_at datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE user_basic (
-    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(255),
-    pass_word varchar(255),
-    phone varchar(255),
-    email varchar(255),
-    identity varchar(255),
-    client_ip varchar(255),
-    client_port varchar(255),
+    name varchar(100) NOT NULL,
+    pass_word varchar(255) NOT NULL,
+    phone varchar(20) UNIQUE NOT NULL,
+    email varchar(100) UNIQUE NOT NULL,
+    identity varchar(50),
+    client_info json DEFAULT NULL,
     login_time datetime DEFAULT NULL,
     heartbeat_time datetime DEFAULT NULL,
-    login_out_time datetime DEFAULT NULL,
-    is_logout tinyint(1) DEFAULT NULL,
-    device_info varchar(255),
-    salt varchar(255),
+    logout_time datetime DEFAULT NULL,
+    is_logout tinyint(1) NOT NULL DEFAULT 0,
+    device_info json DEFAULT NULL,
     avatar varchar(255) DEFAULT NULL,
-    created_at datetime DEFAULT NULL,
-    updated_at datetime DEFAULT NULL,
-    deleted_at datetime DEFAULT NULL
+    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at datetime DEFAULT NULL,
+    INDEX idx_phone (phone),
+    INDEX idx_email (email),
+    INDEX idx_login_time (login_time)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE communities (
+    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    owner_id int unsigned NOT NULL,
+    img varchar(255) DEFAULT NULL,
+    description text DEFAULT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at datetime DEFAULT NULL,
+    INDEX idx_owner (owner_id),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE user_groups (
+    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    owner_id int unsigned NOT NULL,
+    icon varchar(255) DEFAULT NULL,
+    type tinyint NOT NULL DEFAULT 0,
+    description text DEFAULT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at datetime DEFAULT NULL,
+    INDEX idx_owner (owner_id),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE contacts (
+    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    owner_id int unsigned NOT NULL,
+    target_id int unsigned NOT NULL,
+    type tinyint NOT NULL DEFAULT 0,
+    description text DEFAULT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at datetime DEFAULT NULL,
+    INDEX idx_owner_target (owner_id, target_id),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE messages (
+    id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    form_id int unsigned NOT NULL,
+    target_id int unsigned NOT NULL,
+    type tinyint NOT NULL,
+    content text DEFAULT NULL,
+    pic varchar(255) DEFAULT NULL,
+    url varchar(255) DEFAULT NULL,
+    description varchar(255) DEFAULT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at datetime DEFAULT NULL,
+    INDEX idx_form_target (form_id, target_id),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

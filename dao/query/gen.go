@@ -18,29 +18,29 @@ import (
 var (
 	Q           = new(Query)
 	Communities *communities
-	Contact     *contact
-	GroupBasic  *groupBasic
-	Message     *message
-	UserBasic   *userBasic
+	Contacts    *contacts
+	Messages    *messages
+	UserGroups  *userGroups
+	Users       *users
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Communities = &Q.Communities
-	Contact = &Q.Contact
-	GroupBasic = &Q.GroupBasic
-	Message = &Q.Message
-	UserBasic = &Q.UserBasic
+	Contacts = &Q.Contacts
+	Messages = &Q.Messages
+	UserGroups = &Q.UserGroups
+	Users = &Q.Users
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:          db,
 		Communities: newCommunities(db, opts...),
-		Contact:     newContact(db, opts...),
-		GroupBasic:  newGroupBasic(db, opts...),
-		Message:     newMessage(db, opts...),
-		UserBasic:   newUserBasic(db, opts...),
+		Contacts:    newContacts(db, opts...),
+		Messages:    newMessages(db, opts...),
+		UserGroups:  newUserGroups(db, opts...),
+		Users:       newUsers(db, opts...),
 	}
 }
 
@@ -48,10 +48,10 @@ type Query struct {
 	db *gorm.DB
 
 	Communities communities
-	Contact     contact
-	GroupBasic  groupBasic
-	Message     message
-	UserBasic   userBasic
+	Contacts    contacts
+	Messages    messages
+	UserGroups  userGroups
+	Users       users
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -60,10 +60,10 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:          db,
 		Communities: q.Communities.clone(db),
-		Contact:     q.Contact.clone(db),
-		GroupBasic:  q.GroupBasic.clone(db),
-		Message:     q.Message.clone(db),
-		UserBasic:   q.UserBasic.clone(db),
+		Contacts:    q.Contacts.clone(db),
+		Messages:    q.Messages.clone(db),
+		UserGroups:  q.UserGroups.clone(db),
+		Users:       q.Users.clone(db),
 	}
 }
 
@@ -79,28 +79,28 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:          db,
 		Communities: q.Communities.replaceDB(db),
-		Contact:     q.Contact.replaceDB(db),
-		GroupBasic:  q.GroupBasic.replaceDB(db),
-		Message:     q.Message.replaceDB(db),
-		UserBasic:   q.UserBasic.replaceDB(db),
+		Contacts:    q.Contacts.replaceDB(db),
+		Messages:    q.Messages.replaceDB(db),
+		UserGroups:  q.UserGroups.replaceDB(db),
+		Users:       q.Users.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
 	Communities ICommunitiesDo
-	Contact     IContactDo
-	GroupBasic  IGroupBasicDo
-	Message     IMessageDo
-	UserBasic   IUserBasicDo
+	Contacts    IContactsDo
+	Messages    IMessagesDo
+	UserGroups  IUserGroupsDo
+	Users       IUsersDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Communities: q.Communities.WithContext(ctx),
-		Contact:     q.Contact.WithContext(ctx),
-		GroupBasic:  q.GroupBasic.WithContext(ctx),
-		Message:     q.Message.WithContext(ctx),
-		UserBasic:   q.UserBasic.WithContext(ctx),
+		Contacts:    q.Contacts.WithContext(ctx),
+		Messages:    q.Messages.WithContext(ctx),
+		UserGroups:  q.UserGroups.WithContext(ctx),
+		Users:       q.Users.WithContext(ctx),
 	}
 }
 

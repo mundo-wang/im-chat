@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/mundo-wang/wtool/wlog"
 )
 
 var (
@@ -17,4 +18,5 @@ func InitRedis() {
 		PoolSize:     Config.Redis.PoolSize,
 		MinIdleConns: Config.Redis.MinIdleConn,
 	})
+	wlog.Info("InitRedis complete!").Log()
 }

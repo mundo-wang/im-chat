@@ -10,21 +10,21 @@ import (
 	"gorm.io/gorm"
 )
 
-const TableNameCommunities = "communities"
+const TableNameContacts = "contacts"
 
-// Communities mapped from table <communities>
-type Communities struct {
+// Contacts mapped from table <contacts>
+type Contacts struct {
 	ID          int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	Name        string         `gorm:"column:name;not null" json:"name"`
 	OwnerID     int32          `gorm:"column:owner_id;not null" json:"owner_id"`
-	Img         string         `gorm:"column:img" json:"img"`
+	TargetID    int32          `gorm:"column:target_id;not null" json:"target_id"`
+	Type        int32          `gorm:"column:type;not null" json:"type"`
 	Description string         `gorm:"column:description" json:"description"`
 	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 }
 
-// TableName Communities's table name
-func (*Communities) TableName() string {
-	return TableNameCommunities
+// TableName Contacts's table name
+func (*Contacts) TableName() string {
+	return TableNameContacts
 }
