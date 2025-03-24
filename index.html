@@ -22,7 +22,7 @@
     </form>
     <div class="mui-content-padded">
         <button @click="login"  type="button"  class="mui-btn mui-btn-block mui-btn-primary btn-login">登录</button>
-        <div class="link-area"><a id='reg' href="/toRegister">注册账号</a> <span class="spliter">|</span> <a  id='forgetPassword'>忘记密码</a>
+        <div class="link-area"><a id='reg' href="/front/toRegister">注册账号</a> <span class="spliter">|</span> <a  id='forgetPassword'>忘记密码</a>
         </div>
     </div>
     <div class="mui-content-padded oauth-area">
@@ -54,7 +54,7 @@
                     if(res.code!=0){
                         mui.toast(res.message)
                     }else{         
-                        var url = "/toChat?userId="+res.data.ID+"&token="+res.data.Identity
+                        var url = "/front/toChat?userId="+res.data.ID+"&token="+res.data.Identity
                         userInfo(res.data)
                         userId(res.data.ID)
                         mui.toast("登录成功,即将跳转")
