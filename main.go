@@ -12,14 +12,16 @@ import (
 func main() {
 	err := utils.InitConfig()
 	if err != nil {
-		wlog.Fatal("call utils.InitConfig failed").Err(err).Log()
+		wlog.Error("call utils.InitConfig failed").Err(err).Log()
+		return
 	}
 	query.SetDefault(db.GetDB())
+	wlog.Info("InitMySQL complete").Log()
 	utils.InitRedis()
 	r := router.SetRouter()
-	err = r.Run(fmt.Sprintf(":%d", utils.Config.Port.Server))
+	err = r.Run(fmt.Sprintf(":%d", utils.Config.Server.Port))
 	if err != nil {
-		wlog.Error("call r.Run failed").Err(err).Field("serverPort", utils.Config.Port.Server).Log()
+		wlog.Error("call r.Run failed").Err(err).Field("serverPort", utils.Config.Server.Port).Log()
 		return
 	}
 }

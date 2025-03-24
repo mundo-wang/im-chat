@@ -3,9 +3,8 @@ package conf
 type Config struct {
 	MySQL   MySQLConfig   `mapstructure:"mysql"`
 	Redis   RedisConfig   `mapstructure:"redis"`
-	OSS     OSSConfig     `mapstructure:"oss"`
 	Timeout TimeoutConfig `mapstructure:"timeout"`
-	Port    PortConfig    `mapstructure:"port"`
+	Server  ServerConfig  `mapstructure:"server"`
 }
 
 type MySQLConfig struct {
@@ -18,28 +17,21 @@ type MySQLConfig struct {
 
 type RedisConfig struct {
 	IP          string `mapstructure:"ip"`
-	Port        string `mapstructure:"port"`
+	Port        int    `mapstructure:"port"`
 	Password    string `mapstructure:"password"`
 	DB          int    `mapstructure:"DB"`
 	PoolSize    int    `mapstructure:"poolSize"`
 	MinIdleConn int    `mapstructure:"minIdleConn"`
 }
 
-type OSSConfig struct {
-	Endpoint        string `mapstructure:"Endpoint"`
-	AccessKeyId     string `mapstructure:"AccessKeyId"`
-	AccessKeySecret string `mapstructure:"AccessKeySecret"`
-	Bucket          string `mapstructure:"Bucket"`
-}
-
 type TimeoutConfig struct {
-	DelayHeartbeat   int `mapstructure:"DelayHeartbeat"`
-	HeartbeatHz      int `mapstructure:"HeartbeatHz"`
-	HeartbeatMaxTime int `mapstructure:"HeartbeatMaxTime"`
-	RedisOnlineTime  int `mapstructure:"RedisOnlineTime"`
+	DelayHeartbeat   int `mapstructure:"delayHeartbeat"`
+	HeartbeatHz      int `mapstructure:"heartbeatHz"`
+	HeartbeatMaxTime int `mapstructure:"heartbeatMaxTime"`
+	RedisOnlineTime  int `mapstructure:"redisOnlineTime"`
 }
 
-type PortConfig struct {
-	Server int `mapstructure:"server"`
-	UDP    int `mapstructure:"udp"`
+type ServerConfig struct {
+	Port int `mapstructure:"port"`
+	UDP  int `mapstructure:"udp"`
 }
