@@ -22,5 +22,11 @@ func SetRouter(s *wresp.Server) *gin.Engine {
 		front.GET("/toRegister", s.WrapHandler(api.GetFrontApi().ToRegister))
 		front.GET("/toChat", s.WrapHandler(api.GetFrontApi().ToChat))
 	}
+
+	// 与用户相关的接口
+	user := r.Group("/user")
+	{
+		user.GET("/todo")
+	}
 	return r
 }
