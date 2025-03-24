@@ -27,6 +27,7 @@ func SetRouter(s *wresp.Server) *gin.Engine {
 	user := r.Group("/user")
 	{
 		user.GET("/todo")
+		user.POST("/todo")
 	}
 	return r
 }
