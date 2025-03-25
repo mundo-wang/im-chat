@@ -2,6 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mundo-wang/wtool/wlog"
+	"github.com/mundo-wang/wtool/wresp"
 	"im-chat/code"
 	"im-chat/service"
 	"strings"
@@ -33,6 +35,9 @@ func (u *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	}
 	err = u.UserService.CreateUser(userName, password, rePassword)
 	if err != nil {
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call u.UserService.CreateUser failed").Err(err).Field("req", req).Log()
+		}
 		return nil, err
 	}
 	return nil, nil
