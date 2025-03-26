@@ -29,7 +29,7 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 	_users.ALL = field.NewAsterisk(tableName)
 	_users.ID = field.NewInt32(tableName, "id")
 	_users.Name = field.NewString(tableName, "name")
-	_users.PassWord = field.NewString(tableName, "pass_word")
+	_users.Password = field.NewString(tableName, "password")
 	_users.Phone = field.NewString(tableName, "phone")
 	_users.Email = field.NewString(tableName, "email")
 	_users.Identity = field.NewString(tableName, "identity")
@@ -40,6 +40,7 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 	_users.IsLogout = field.NewBool(tableName, "is_logout")
 	_users.DeviceInfo = field.NewString(tableName, "device_info")
 	_users.Avatar = field.NewString(tableName, "avatar")
+	_users.Salt = field.NewString(tableName, "salt")
 	_users.CreatedAt = field.NewTime(tableName, "created_at")
 	_users.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_users.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -55,7 +56,7 @@ type users struct {
 	ALL           field.Asterisk
 	ID            field.Int32
 	Name          field.String
-	PassWord      field.String
+	Password      field.String
 	Phone         field.String
 	Email         field.String
 	Identity      field.String
@@ -66,6 +67,7 @@ type users struct {
 	IsLogout      field.Bool
 	DeviceInfo    field.String
 	Avatar        field.String
+	Salt          field.String
 	CreatedAt     field.Time
 	UpdatedAt     field.Time
 	DeletedAt     field.Field
@@ -87,7 +89,7 @@ func (u *users) updateTableName(table string) *users {
 	u.ALL = field.NewAsterisk(table)
 	u.ID = field.NewInt32(table, "id")
 	u.Name = field.NewString(table, "name")
-	u.PassWord = field.NewString(table, "pass_word")
+	u.Password = field.NewString(table, "password")
 	u.Phone = field.NewString(table, "phone")
 	u.Email = field.NewString(table, "email")
 	u.Identity = field.NewString(table, "identity")
@@ -98,6 +100,7 @@ func (u *users) updateTableName(table string) *users {
 	u.IsLogout = field.NewBool(table, "is_logout")
 	u.DeviceInfo = field.NewString(table, "device_info")
 	u.Avatar = field.NewString(table, "avatar")
+	u.Salt = field.NewString(table, "salt")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")
 	u.DeletedAt = field.NewField(table, "deleted_at")
@@ -117,10 +120,10 @@ func (u *users) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *users) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 16)
+	u.fieldMap = make(map[string]field.Expr, 17)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["name"] = u.Name
-	u.fieldMap["pass_word"] = u.PassWord
+	u.fieldMap["password"] = u.Password
 	u.fieldMap["phone"] = u.Phone
 	u.fieldMap["email"] = u.Email
 	u.fieldMap["identity"] = u.Identity
@@ -131,6 +134,7 @@ func (u *users) fillFieldMap() {
 	u.fieldMap["is_logout"] = u.IsLogout
 	u.fieldMap["device_info"] = u.DeviceInfo
 	u.fieldMap["avatar"] = u.Avatar
+	u.fieldMap["salt"] = u.Salt
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt
 	u.fieldMap["deleted_at"] = u.DeletedAt

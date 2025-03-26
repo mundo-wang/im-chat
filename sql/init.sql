@@ -5,7 +5,7 @@
 CREATE TABLE users (
     id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) NOT NULL,
-    pass_word varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
     phone varchar(20) UNIQUE NOT NULL,
     email varchar(100) UNIQUE NOT NULL,
     identity varchar(50),
@@ -16,6 +16,7 @@ CREATE TABLE users (
     is_logout tinyint(1) NOT NULL DEFAULT 0,
     device_info json DEFAULT NULL,
     avatar varchar(255) DEFAULT NULL,
+    salt varchar(255) DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at datetime DEFAULT NULL,

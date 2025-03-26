@@ -21,6 +21,7 @@ func (u *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	req := &service.CreateUserReq{}
 	err := c.ShouldBindJSON(req)
 	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
 		return nil, err
 	}
 	// 不知道前端有没有做去掉首尾空格的处理，我这里先做一下
@@ -33,7 +34,7 @@ func (u *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	if password != rePassword {
 		return nil, code.PasswordMismatch
 	}
-	err = u.UserService.CreateUser(userName, password, rePassword)
+	err = u.UserService.CreateUser(userName, password)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {
 			wlog.Error("call u.UserService.CreateUser failed").Err(err).Field("req", req).Log()
