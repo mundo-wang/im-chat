@@ -6,7 +6,6 @@ import (
 	"im-chat/dao/model"
 	"im-chat/dao/query"
 	"im-chat/utils"
-	"time"
 )
 
 type UserService struct {
@@ -28,14 +27,11 @@ func (u *UserService) CreateUser(userName, password string) error {
 		return err
 	}
 	user := &model.Users{
-		Name:          userName,
-		Password:      signature,
-		Salt:          salt,
-		LoginTime:     time.Now(), // 这三条先为了避免数据库报错加在这里，后续看看是调整表还是怎么样
-		HeartbeatTime: time.Now(),
-		LogoutTime:    time.Now(),
+		Name:     userName,
+		Password: signature,
+		Salt:     salt,
 	}
-	err = usersQ.Create(user)
+	err = usersQ.Omit(usersQ.LoginTime, usersQ.HeartbeatTime, usersQ.LogoutTime).Create(user)
 	if err != nil {
 		wlog.Error("call usersQ.Create failed").Err(err).Field("user", user).Log()
 		return err
