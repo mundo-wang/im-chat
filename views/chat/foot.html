@@ -426,7 +426,7 @@
                     console.log(">>>> " + userid)
                     var userinfo = this.usermap[userid];
                     if (!userinfo) {
-                        post("user/find", { userId: parseInt(userid) }, function (res) {
+                        post("user/findById", { userId: parseInt(userid) }, function (res) {
                             cb(res.Data);
                             this.usermap[userid] = res.Data;
                         }.bind(this))

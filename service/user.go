@@ -1,7 +1,9 @@
 package service
 
 import (
+	"errors"
 	"github.com/mundo-wang/wtool/wlog"
+	"gorm.io/gorm"
 	"im-chat/code"
 	"im-chat/dao/model"
 	"im-chat/dao/query"
@@ -37,4 +39,21 @@ func (u *UserService) CreateUser(userName, password string) error {
 		return err
 	}
 	return nil
+}
+
+func (u *UserService) FindByNamePwd(userName, password string) (*model.Users, error) {
+	usersQ := query.Users
+	user, err := usersQ.Where(usersQ.Name.Eq(userName)).First()
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, code.UserNameNotExist
+		}
+		wlog.Error("call usersQ.First failed").Err(err).Field("userName", userName).Log()
+		return nil, err
+	}
+	check := utils.VerifySignature(password, user.Salt, user.Password)
+	if !check {
+		return nil, code.PasswordNotCorrect
+	}
+	return user, nil
 }

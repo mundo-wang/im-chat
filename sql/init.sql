@@ -6,8 +6,8 @@ CREATE TABLE users (
     id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
-    phone varchar(20) UNIQUE NOT NULL,
-    email varchar(100) UNIQUE NOT NULL,
+    phone varchar(20) NOT NULL,
+    email varchar(100) NOT NULL,
     identity varchar(50),
     client_info varchar(255) DEFAULT NULL,
     login_time datetime DEFAULT NULL,
@@ -19,10 +19,7 @@ CREATE TABLE users (
     salt varchar(255) DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at datetime DEFAULT NULL,
-    INDEX idx_phone (phone),
-    INDEX idx_email (email),
-    INDEX idx_login_time (login_time)
+    deleted_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -34,9 +31,7 @@ CREATE TABLE communities (
     description text DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at datetime DEFAULT NULL,
-    INDEX idx_owner (owner_id),
-    INDEX idx_created_at (created_at)
+    deleted_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE user_groups (
@@ -48,9 +43,7 @@ CREATE TABLE user_groups (
     description text DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at datetime DEFAULT NULL,
-    INDEX idx_owner (owner_id),
-    INDEX idx_created_at (created_at)
+    deleted_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -62,9 +55,7 @@ CREATE TABLE contacts (
     description text DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at datetime DEFAULT NULL,
-    INDEX idx_owner_target (owner_id, target_id),
-    INDEX idx_created_at (created_at)
+    deleted_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -79,8 +70,6 @@ CREATE TABLE messages (
     description varchar(255) DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at datetime DEFAULT NULL,
-    INDEX idx_form_target (form_id, target_id),
-    INDEX idx_created_at (created_at)
+    deleted_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

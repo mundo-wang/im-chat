@@ -43,3 +43,22 @@ func (u *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	}
 	return nil, nil
 }
+
+func (u *UserApi) FindByNamePwd(c *gin.Context) (interface{}, error) {
+	req := &service.FindByNamePwdReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	userName := strings.TrimSpace(req.UserName)
+	password := strings.TrimSpace(req.Password)
+	user, err := u.UserService.FindByNamePwd(userName, password)
+	if err != nil {
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call u.UserService.FindByNamePwd failed").Err(err).Field("req", req).Log()
+		}
+		return nil, err
+	}
+	return user, nil
+}
