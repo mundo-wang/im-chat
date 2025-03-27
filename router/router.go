@@ -27,5 +27,4 @@ func SetRouter(s *wresp.Server) {
 		user.POST("/create", s.WrapHandler(api.GetUserApi().CreateUser))
 		user.POST("/findByNamePwd", s.WrapHandler(api.GetUserApi().FindByNamePwd))
 	}
-	s.Router = r
 }

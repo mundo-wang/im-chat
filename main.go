@@ -19,11 +19,6 @@ func main() {
 	}
 	query.SetDefault(db.GetDB())
 	wlog.Info("InitMySQL complete").Log()
-	usersQ := query.Users
-	_, err = usersQ.Where(usersQ.Name.Eq("caonima")).First()
-	if err != nil {
-		wlog.Error("call usersQ.Where failed").Err(err).Log()
-	}
 	utils.InitRedis()
 	s := NewServer()
 	err = s.Router.Run(fmt.Sprintf(":%d", utils.Config.Server.Port))
