@@ -63,7 +63,7 @@ func (u *UserService) SearchFriends(userId int) ([]*model.Users, error) {
 	contactsQ := query.Contacts
 	friendIds := make([]int, 0)
 	err := contactsQ.Select(contactsQ.TargetID).Where(contactsQ.OwnerID.Eq(userId),
-		contactsQ.Type.Eq(utils.ContactTypeGroup)).Scan(&friendIds)
+		contactsQ.Type.Eq(utils.ContactTypeFriend)).Scan(&friendIds)
 	if err != nil {
 		wlog.Error("call contactsQ.Scan failed").Err(err).Field("userId", userId).Log()
 		return nil, err

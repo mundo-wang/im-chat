@@ -1,6 +1,6 @@
 package utils
 
 var (
-	ContactTypeFriend = 1
-	ContactTypeGroup  = 2
+	ContactTypeFriend = 1 // 表示好友
+	ContactTypeGroup  = 2 // 表示群组
 )

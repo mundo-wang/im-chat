@@ -47,8 +47,8 @@ type contacts struct {
 	ALL         field.Asterisk
 	ID          field.Int
 	OwnerID     field.Int
-	TargetID    field.Int
-	Type        field.Int
+	TargetID    field.Int // 对应的人/群ID
+	Type        field.Int // 1为好友，2为群组
 	Description field.String
 	CreatedAt   field.Time
 	UpdatedAt   field.Time

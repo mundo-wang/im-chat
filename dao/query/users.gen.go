@@ -64,7 +64,7 @@ type users struct {
 	LoginTime     field.Time
 	HeartbeatTime field.Time
 	LogoutTime    field.Time
-	IsLogout      field.Int
+	IsLogout      field.Int // 0为未登出，1为已登出
 	DeviceInfo    field.String
 	Avatar        field.String
 	Salt          field.String
