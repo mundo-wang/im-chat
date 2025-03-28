@@ -27,10 +27,10 @@ func newContacts(db *gorm.DB, opts ...gen.DOOption) contacts {
 
 	tableName := _contacts.contactsDo.TableName()
 	_contacts.ALL = field.NewAsterisk(tableName)
-	_contacts.ID = field.NewInt32(tableName, "id")
-	_contacts.OwnerID = field.NewInt32(tableName, "owner_id")
-	_contacts.TargetID = field.NewInt32(tableName, "target_id")
-	_contacts.Type = field.NewInt32(tableName, "type")
+	_contacts.ID = field.NewInt(tableName, "id")
+	_contacts.OwnerID = field.NewInt(tableName, "owner_id")
+	_contacts.TargetID = field.NewInt(tableName, "target_id")
+	_contacts.Type = field.NewInt(tableName, "type")
 	_contacts.Description = field.NewString(tableName, "description")
 	_contacts.CreatedAt = field.NewTime(tableName, "created_at")
 	_contacts.UpdatedAt = field.NewTime(tableName, "updated_at")
@@ -45,10 +45,10 @@ type contacts struct {
 	contactsDo
 
 	ALL         field.Asterisk
-	ID          field.Int32
-	OwnerID     field.Int32
-	TargetID    field.Int32
-	Type        field.Int32
+	ID          field.Int
+	OwnerID     field.Int
+	TargetID    field.Int
+	Type        field.Int
 	Description field.String
 	CreatedAt   field.Time
 	UpdatedAt   field.Time
@@ -69,10 +69,10 @@ func (c contacts) As(alias string) *contacts {
 
 func (c *contacts) updateTableName(table string) *contacts {
 	c.ALL = field.NewAsterisk(table)
-	c.ID = field.NewInt32(table, "id")
-	c.OwnerID = field.NewInt32(table, "owner_id")
-	c.TargetID = field.NewInt32(table, "target_id")
-	c.Type = field.NewInt32(table, "type")
+	c.ID = field.NewInt(table, "id")
+	c.OwnerID = field.NewInt(table, "owner_id")
+	c.TargetID = field.NewInt(table, "target_id")
+	c.Type = field.NewInt(table, "type")
 	c.Description = field.NewString(table, "description")
 	c.CreatedAt = field.NewTime(table, "created_at")
 	c.UpdatedAt = field.NewTime(table, "updated_at")

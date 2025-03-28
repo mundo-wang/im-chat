@@ -27,7 +27,7 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 
 	tableName := _users.usersDo.TableName()
 	_users.ALL = field.NewAsterisk(tableName)
-	_users.ID = field.NewInt32(tableName, "id")
+	_users.ID = field.NewInt(tableName, "id")
 	_users.Name = field.NewString(tableName, "name")
 	_users.Password = field.NewString(tableName, "password")
 	_users.Phone = field.NewString(tableName, "phone")
@@ -37,7 +37,7 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 	_users.LoginTime = field.NewTime(tableName, "login_time")
 	_users.HeartbeatTime = field.NewTime(tableName, "heartbeat_time")
 	_users.LogoutTime = field.NewTime(tableName, "logout_time")
-	_users.IsLogout = field.NewBool(tableName, "is_logout")
+	_users.IsLogout = field.NewInt(tableName, "is_logout")
 	_users.DeviceInfo = field.NewString(tableName, "device_info")
 	_users.Avatar = field.NewString(tableName, "avatar")
 	_users.Salt = field.NewString(tableName, "salt")
@@ -54,7 +54,7 @@ type users struct {
 	usersDo
 
 	ALL           field.Asterisk
-	ID            field.Int32
+	ID            field.Int
 	Name          field.String
 	Password      field.String
 	Phone         field.String
@@ -64,7 +64,7 @@ type users struct {
 	LoginTime     field.Time
 	HeartbeatTime field.Time
 	LogoutTime    field.Time
-	IsLogout      field.Bool
+	IsLogout      field.Int
 	DeviceInfo    field.String
 	Avatar        field.String
 	Salt          field.String
@@ -87,7 +87,7 @@ func (u users) As(alias string) *users {
 
 func (u *users) updateTableName(table string) *users {
 	u.ALL = field.NewAsterisk(table)
-	u.ID = field.NewInt32(table, "id")
+	u.ID = field.NewInt(table, "id")
 	u.Name = field.NewString(table, "name")
 	u.Password = field.NewString(table, "password")
 	u.Phone = field.NewString(table, "phone")
@@ -97,7 +97,7 @@ func (u *users) updateTableName(table string) *users {
 	u.LoginTime = field.NewTime(table, "login_time")
 	u.HeartbeatTime = field.NewTime(table, "heartbeat_time")
 	u.LogoutTime = field.NewTime(table, "logout_time")
-	u.IsLogout = field.NewBool(table, "is_logout")
+	u.IsLogout = field.NewInt(table, "is_logout")
 	u.DeviceInfo = field.NewString(table, "device_info")
 	u.Avatar = field.NewString(table, "avatar")
 	u.Salt = field.NewString(table, "salt")

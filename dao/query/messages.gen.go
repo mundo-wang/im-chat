@@ -27,10 +27,10 @@ func newMessages(db *gorm.DB, opts ...gen.DOOption) messages {
 
 	tableName := _messages.messagesDo.TableName()
 	_messages.ALL = field.NewAsterisk(tableName)
-	_messages.ID = field.NewInt32(tableName, "id")
-	_messages.FormID = field.NewInt32(tableName, "form_id")
-	_messages.TargetID = field.NewInt32(tableName, "target_id")
-	_messages.Type = field.NewInt32(tableName, "type")
+	_messages.ID = field.NewInt(tableName, "id")
+	_messages.FormID = field.NewInt(tableName, "form_id")
+	_messages.TargetID = field.NewInt(tableName, "target_id")
+	_messages.Type = field.NewInt(tableName, "type")
 	_messages.Content = field.NewString(tableName, "content")
 	_messages.Pic = field.NewString(tableName, "pic")
 	_messages.URL = field.NewString(tableName, "url")
@@ -48,10 +48,10 @@ type messages struct {
 	messagesDo
 
 	ALL         field.Asterisk
-	ID          field.Int32
-	FormID      field.Int32
-	TargetID    field.Int32
-	Type        field.Int32
+	ID          field.Int
+	FormID      field.Int
+	TargetID    field.Int
+	Type        field.Int
 	Content     field.String
 	Pic         field.String
 	URL         field.String
@@ -75,10 +75,10 @@ func (m messages) As(alias string) *messages {
 
 func (m *messages) updateTableName(table string) *messages {
 	m.ALL = field.NewAsterisk(table)
-	m.ID = field.NewInt32(table, "id")
-	m.FormID = field.NewInt32(table, "form_id")
-	m.TargetID = field.NewInt32(table, "target_id")
-	m.Type = field.NewInt32(table, "type")
+	m.ID = field.NewInt(table, "id")
+	m.FormID = field.NewInt(table, "form_id")
+	m.TargetID = field.NewInt(table, "target_id")
+	m.Type = field.NewInt(table, "type")
 	m.Content = field.NewString(table, "content")
 	m.Pic = field.NewString(table, "pic")
 	m.URL = field.NewString(table, "url")

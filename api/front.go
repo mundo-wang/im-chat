@@ -15,7 +15,7 @@ func GetFrontApi() *FrontApi {
 	return &FrontApi{}
 }
 
-func (f *FrontApi) GetIndex(c *gin.Context) (interface{}, error) {
+func (api *FrontApi) GetIndex(c *gin.Context) (interface{}, error) {
 	files, err := template.ParseFiles("index.html", "views/chat/head.html")
 	if err != nil {
 		wlog.Error("call template.ParseFiles failed").Err(err).Log()
@@ -29,7 +29,7 @@ func (f *FrontApi) GetIndex(c *gin.Context) (interface{}, error) {
 	return nil, nil
 }
 
-func (f *FrontApi) ToRegister(c *gin.Context) (interface{}, error) {
+func (api *FrontApi) ToRegister(c *gin.Context) (interface{}, error) {
 	files, err := template.ParseFiles("views/user/register.html")
 	if err != nil {
 		wlog.Error("call template.ParseFiles failed").Err(err).Log()
@@ -43,7 +43,7 @@ func (f *FrontApi) ToRegister(c *gin.Context) (interface{}, error) {
 	return nil, nil
 }
 
-func (f *FrontApi) ToChat(c *gin.Context) (interface{}, error) {
+func (api *FrontApi) ToChat(c *gin.Context) (interface{}, error) {
 	ind, err := template.ParseFiles(
 		"views/chat/index.html",
 		"views/chat/head.html",
@@ -68,7 +68,7 @@ func (f *FrontApi) ToChat(c *gin.Context) (interface{}, error) {
 	}
 	token := c.Query("token")
 	user := model.Users{}
-	user.ID = int32(userId)
+	user.ID = userId
 	user.Identity = token
 	err = ind.Execute(c.Writer, user)
 	if err != nil {

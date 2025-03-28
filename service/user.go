@@ -57,3 +57,21 @@ func (u *UserService) FindByNamePwd(userName, password string) (*model.Users, er
 	}
 	return user, nil
 }
+
+func (u *UserService) SearchFriends(userId int) ([]*model.Users, error) {
+	usersQ := query.Users
+	contactsQ := query.Contacts
+	friendIds := make([]int, 0)
+	err := contactsQ.Select(contactsQ.TargetID).Where(contactsQ.OwnerID.Eq(userId),
+		contactsQ.Type.Eq(utils.ContactTypeGroup)).Scan(&friendIds)
+	if err != nil {
+		wlog.Error("call contactsQ.Scan failed").Err(err).Field("userId", userId).Log()
+		return nil, err
+	}
+	friends, err := usersQ.Where(usersQ.ID.In(friendIds...)).Find()
+	if err != nil {
+		wlog.Error("call usersQ.Find failed").Err(err).Field("friendIds", friendIds).Log()
+		return nil, err
+	}
+	return friends, nil
+}

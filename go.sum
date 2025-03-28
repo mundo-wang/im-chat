@@ -99,6 +99,8 @@ github.com/mundo-wang/wtool v1.0.5 h1:W7bjMsC7Zw9FQmRU+3kvg0egUHVi5bwzOKZNZ3/mSx
 github.com/mundo-wang/wtool v1.0.5/go.mod h1:Y8tiKifpj9qFe720GlRsjWFjHhFjr5gQS5qjjrzSDi8=
 github.com/mundo-wang/wtool v1.0.6-0.20250326065541-62a0be0c6bba h1:9pb39nanquLFbWOpmb7vylKL3DAdXGglj4cmwZQUKDI=
 github.com/mundo-wang/wtool v1.0.6-0.20250326065541-62a0be0c6bba/go.mod h1:Y8tiKifpj9qFe720GlRsjWFjHhFjr5gQS5qjjrzSDi8=
+github.com/mundo-wang/wtool v1.0.6-0.20250326144930-654b0d8b984b h1:69Cxm1VlhNBIPKnXZMSfzpQiI3Oraz1afaxQqBX3wds=
+github.com/mundo-wang/wtool v1.0.6-0.20250326144930-654b0d8b984b/go.mod h1:Y8tiKifpj9qFe720GlRsjWFjHhFjr5gQS5qjjrzSDi8=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=
 github.com/nxadm/tail v1.4.8/go.mod h1:+ncqLTQzXmGhMZNUePPaPqPvBxHAIsmXswZKocGu+AU=
 github.com/onsi/ginkgo v1.16.5 h1:8xi0RTUf59SOSfEtZMvwTvXYMzG4gV23XVHOZiXNtnE=

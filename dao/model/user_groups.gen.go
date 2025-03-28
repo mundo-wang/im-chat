@@ -14,11 +14,11 @@ const TableNameUserGroups = "user_groups"
 
 // UserGroups mapped from table <user_groups>
 type UserGroups struct {
-	ID          int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	ID          int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
 	Name        string         `gorm:"column:name;not null" json:"name"`
-	OwnerID     int32          `gorm:"column:owner_id;not null" json:"owner_id"`
+	OwnerID     int            `gorm:"column:owner_id;not null" json:"owner_id"`
 	Icon        string         `gorm:"column:icon" json:"icon"`
-	Type        int32          `gorm:"column:type;not null" json:"type"`
+	Type        int            `gorm:"column:type;not null" json:"type"`
 	Description string         `gorm:"column:description" json:"description"`
 	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`

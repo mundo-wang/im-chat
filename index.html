@@ -14,7 +14,7 @@
 <div class="mui-content login-page" id="pageapp">
     <form id='login-form' class="mui-input-group login-from">
         <div class="mui-input-row">
-            <input v-model="user.name" placeholder="请输入用户名" type="text" class="mui-input-clear mui-input" >
+            <input v-model="user.userName" placeholder="请输入用户名" type="text" class="mui-input-clear mui-input" >
         </div>
         <div class="mui-input-row">
             <input v-model="user.password" placeholder="请输入密码" type="password" class="mui-input-clear mui-input" >
@@ -36,7 +36,7 @@
         data:function(){
           return {
               user:{
-                name:"",
+                userName:"",
                 password:"",
               }
           }
@@ -52,11 +52,13 @@
                 util.post("user/findByNamePwd",this.user).then(res=>{
                     console.log(res)
                     if(res.code!=0){
+                        alert(res)
+                        alert(res.printInfo)
                         mui.toast(res.message)
                     }else{         
-                        var url = "/front/toChat?userId="+res.data.ID+"&token="+res.data.Identity
+                        var url = "/front/toChat?userId="+res.data.id+"&token="+res.data.identity
                         userInfo(res.data)
-                        userId(res.data.ID)
+                        userId(res.data.id)
                         mui.toast("登录成功,即将跳转")
                         location.href = url
                     }

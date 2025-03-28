@@ -14,9 +14,9 @@ const TableNameCommunities = "communities"
 
 // Communities mapped from table <communities>
 type Communities struct {
-	ID          int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	ID          int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
 	Name        string         `gorm:"column:name;not null" json:"name"`
-	OwnerID     int32          `gorm:"column:owner_id;not null" json:"owner_id"`
+	OwnerID     int            `gorm:"column:owner_id;not null" json:"owner_id"`
 	Img         string         `gorm:"column:img" json:"img"`
 	Description string         `gorm:"column:description" json:"description"`
 	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`

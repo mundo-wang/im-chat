@@ -27,11 +27,11 @@ func newUserGroups(db *gorm.DB, opts ...gen.DOOption) userGroups {
 
 	tableName := _userGroups.userGroupsDo.TableName()
 	_userGroups.ALL = field.NewAsterisk(tableName)
-	_userGroups.ID = field.NewInt32(tableName, "id")
+	_userGroups.ID = field.NewInt(tableName, "id")
 	_userGroups.Name = field.NewString(tableName, "name")
-	_userGroups.OwnerID = field.NewInt32(tableName, "owner_id")
+	_userGroups.OwnerID = field.NewInt(tableName, "owner_id")
 	_userGroups.Icon = field.NewString(tableName, "icon")
-	_userGroups.Type = field.NewInt32(tableName, "type")
+	_userGroups.Type = field.NewInt(tableName, "type")
 	_userGroups.Description = field.NewString(tableName, "description")
 	_userGroups.CreatedAt = field.NewTime(tableName, "created_at")
 	_userGroups.UpdatedAt = field.NewTime(tableName, "updated_at")
@@ -46,11 +46,11 @@ type userGroups struct {
 	userGroupsDo
 
 	ALL         field.Asterisk
-	ID          field.Int32
+	ID          field.Int
 	Name        field.String
-	OwnerID     field.Int32
+	OwnerID     field.Int
 	Icon        field.String
-	Type        field.Int32
+	Type        field.Int
 	Description field.String
 	CreatedAt   field.Time
 	UpdatedAt   field.Time
@@ -71,11 +71,11 @@ func (u userGroups) As(alias string) *userGroups {
 
 func (u *userGroups) updateTableName(table string) *userGroups {
 	u.ALL = field.NewAsterisk(table)
-	u.ID = field.NewInt32(table, "id")
+	u.ID = field.NewInt(table, "id")
 	u.Name = field.NewString(table, "name")
-	u.OwnerID = field.NewInt32(table, "owner_id")
+	u.OwnerID = field.NewInt(table, "owner_id")
 	u.Icon = field.NewString(table, "icon")
-	u.Type = field.NewInt32(table, "type")
+	u.Type = field.NewInt(table, "type")
 	u.Description = field.NewString(table, "description")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")

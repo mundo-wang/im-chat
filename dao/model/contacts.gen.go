@@ -14,10 +14,10 @@ const TableNameContacts = "contacts"
 
 // Contacts mapped from table <contacts>
 type Contacts struct {
-	ID          int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	OwnerID     int32          `gorm:"column:owner_id;not null" json:"owner_id"`
-	TargetID    int32          `gorm:"column:target_id;not null" json:"target_id"`
-	Type        int32          `gorm:"column:type;not null" json:"type"`
+	ID          int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	OwnerID     int            `gorm:"column:owner_id;not null" json:"owner_id"`
+	TargetID    int            `gorm:"column:target_id;not null" json:"target_id"`
+	Type        int            `gorm:"column:type;not null" json:"type"`
 	Description string         `gorm:"column:description" json:"description"`
 	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`

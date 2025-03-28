@@ -27,9 +27,9 @@ func newCommunities(db *gorm.DB, opts ...gen.DOOption) communities {
 
 	tableName := _communities.communitiesDo.TableName()
 	_communities.ALL = field.NewAsterisk(tableName)
-	_communities.ID = field.NewInt32(tableName, "id")
+	_communities.ID = field.NewInt(tableName, "id")
 	_communities.Name = field.NewString(tableName, "name")
-	_communities.OwnerID = field.NewInt32(tableName, "owner_id")
+	_communities.OwnerID = field.NewInt(tableName, "owner_id")
 	_communities.Img = field.NewString(tableName, "img")
 	_communities.Description = field.NewString(tableName, "description")
 	_communities.CreatedAt = field.NewTime(tableName, "created_at")
@@ -45,9 +45,9 @@ type communities struct {
 	communitiesDo
 
 	ALL         field.Asterisk
-	ID          field.Int32
+	ID          field.Int
 	Name        field.String
-	OwnerID     field.Int32
+	OwnerID     field.Int
 	Img         field.String
 	Description field.String
 	CreatedAt   field.Time
@@ -69,9 +69,9 @@ func (c communities) As(alias string) *communities {
 
 func (c *communities) updateTableName(table string) *communities {
 	c.ALL = field.NewAsterisk(table)
-	c.ID = field.NewInt32(table, "id")
+	c.ID = field.NewInt(table, "id")
 	c.Name = field.NewString(table, "name")
-	c.OwnerID = field.NewInt32(table, "owner_id")
+	c.OwnerID = field.NewInt(table, "owner_id")
 	c.Img = field.NewString(table, "img")
 	c.Description = field.NewString(table, "description")
 	c.CreatedAt = field.NewTime(table, "created_at")

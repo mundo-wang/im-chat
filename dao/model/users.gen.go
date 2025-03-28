@@ -14,7 +14,7 @@ const TableNameUsers = "users"
 
 // Users mapped from table <users>
 type Users struct {
-	ID            int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	ID            int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
 	Name          string         `gorm:"column:name;not null" json:"name"`
 	Password      string         `gorm:"column:password;not null" json:"password"`
 	Phone         string         `gorm:"column:phone;not null" json:"phone"`
@@ -24,7 +24,7 @@ type Users struct {
 	LoginTime     time.Time      `gorm:"column:login_time" json:"login_time"`
 	HeartbeatTime time.Time      `gorm:"column:heartbeat_time" json:"heartbeat_time"`
 	LogoutTime    time.Time      `gorm:"column:logout_time" json:"logout_time"`
-	IsLogout      bool           `gorm:"column:is_logout;not null" json:"is_logout"`
+	IsLogout      int            `gorm:"column:is_logout;not null" json:"is_logout"`
 	DeviceInfo    string         `gorm:"column:device_info" json:"device_info"`
 	Avatar        string         `gorm:"column:avatar" json:"avatar"`
 	Salt          string         `gorm:"column:salt" json:"salt"`

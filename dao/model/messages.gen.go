@@ -14,10 +14,10 @@ const TableNameMessages = "messages"
 
 // Messages mapped from table <messages>
 type Messages struct {
-	ID          int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	FormID      int32          `gorm:"column:form_id;not null" json:"form_id"`
-	TargetID    int32          `gorm:"column:target_id;not null" json:"target_id"`
-	Type        int32          `gorm:"column:type;not null" json:"type"`
+	ID          int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	FormID      int            `gorm:"column:form_id;not null" json:"form_id"`
+	TargetID    int            `gorm:"column:target_id;not null" json:"target_id"`
+	Type        int            `gorm:"column:type;not null" json:"type"`
 	Content     string         `gorm:"column:content" json:"content"`
 	Pic         string         `gorm:"column:pic" json:"pic"`
 	URL         string         `gorm:"column:url" json:"url"`
