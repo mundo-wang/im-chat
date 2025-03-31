@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"github.com/mundo-wang/wtool/wlog"
+	"github.com/mundo-wang/wtool/wresp"
 	"gorm.io/gorm"
 	"im-chat/code"
 	"im-chat/dao/model"
@@ -69,4 +70,27 @@ func (u *UserService) SearchFriends(userId int) ([]*model.Users, error) {
 		return nil, err
 	}
 	return friends, nil
+}
+
+func (u *UserService) ChangePassword(userName, password, newPassword string) error {
+	user, err := u.FindByNamePwd(userName, password)
+	if err != nil {
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call u.FindByNamePwd failed").Err(err).Field("userName", userName).Log()
+		}
+		return err
+	}
+	signature, salt, err := utils.GenerateSignature(newPassword)
+	if err != nil {
+		wlog.Error("call utils.GenerateSignature failed").Err(err).Field("userName", userName).Log()
+		return err
+	}
+	user.Password = signature
+	user.Salt = salt
+	_, err = usersQ.Where(usersQ.ID.Eq(user.ID)).Updates(user)
+	if err != nil {
+		wlog.Error("call usersQ.Create failed").Err(err).Log()
+		return err
+	}
+	return nil
 }

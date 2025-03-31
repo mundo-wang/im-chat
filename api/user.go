@@ -40,7 +40,7 @@ func (api *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	if err != nil {
 		// 如果service里的代码返回了错误码，则需要进行这个判断，否则不需要
 		if !wresp.IsErrorCode(err) {
-			wlog.Error("call u.UserService.CreateUser failed").Err(err).Field("req", req).Log()
+			wlog.Error("call api.UserService.CreateUser failed").Err(err).Field("req", req).Log()
 		}
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (api *UserApi) FindByNamePwd(c *gin.Context) (interface{}, error) {
 	user, err := api.UserService.FindByNamePwd(userName, password)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {
-			wlog.Error("call u.UserService.FindByNamePwd failed").Err(err).Field("req", req).Log()
+			wlog.Error("call api.UserService.FindByNamePwd failed").Err(err).Field("req", req).Log()
 		}
 		return nil, err
 	}
@@ -75,12 +75,28 @@ func (api *UserApi) SearchFriends(c *gin.Context) (interface{}, error) {
 	}
 	friends, err := api.UserService.SearchFriends(userId)
 	if err != nil {
-		wlog.Error("call u.UserService.SearchFriends failed").Err(err).Field("userId", userId).Log()
+		wlog.Error("call api.UserService.SearchFriends failed").Err(err).Field("userId", userId).Log()
 		return nil, err
 	}
 	return friends, nil
 }
 
 func (api *UserApi) ChangePassword(c *gin.Context) (interface{}, error) {
+	req := &service.ChangePasswordReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	if req.Password == req.NewPassword {
+		return nil, code.PasswordUnchanged
+	}
+	err = api.UserService.ChangePassword(req.UserName, req.Password, req.NewPassword)
+	if err != nil {
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call api.UserService.ChangePassword failed").Err(err).Field("req", req).Log()
+		}
+		return nil, err
+	}
 	return nil, nil
 }
