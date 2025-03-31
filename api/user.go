@@ -80,3 +80,7 @@ func (api *UserApi) SearchFriends(c *gin.Context) (interface{}, error) {
 	}
 	return friends, nil
 }
+
+func (api *UserApi) ChangePassword(c *gin.Context) (interface{}, error) {
+	return nil, nil
+}

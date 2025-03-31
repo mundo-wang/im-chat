@@ -8,6 +8,7 @@ import (
 	"im-chat/cmd/db"
 	"im-chat/dao/query"
 	"im-chat/router"
+	"im-chat/service"
 	"im-chat/utils"
 )
 
@@ -18,6 +19,7 @@ func main() {
 		return
 	}
 	query.SetDefault(db.GetDB())
+	service.InitDao()
 	wlog.Info("InitMySQL complete").Log()
 	utils.InitRedis()
 	s := NewServer()

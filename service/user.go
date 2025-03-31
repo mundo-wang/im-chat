@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 	"im-chat/code"
 	"im-chat/dao/model"
-	"im-chat/dao/query"
 	"im-chat/utils"
 )
 
@@ -14,7 +13,6 @@ type UserService struct {
 }
 
 func (u *UserService) CreateUser(userName, password string) error {
-	usersQ := query.Users
 	count, err := usersQ.Where(usersQ.Name.Eq(userName)).Count()
 	if err != nil {
 		wlog.Error("call usersQ.Count() failed").Err(err).Field("userName", userName).Log()
@@ -42,7 +40,6 @@ func (u *UserService) CreateUser(userName, password string) error {
 }
 
 func (u *UserService) FindByNamePwd(userName, password string) (*model.Users, error) {
-	usersQ := query.Users
 	user, err := usersQ.Where(usersQ.Name.Eq(userName)).First()
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -59,8 +56,6 @@ func (u *UserService) FindByNamePwd(userName, password string) (*model.Users, er
 }
 
 func (u *UserService) SearchFriends(userId int) ([]*model.Users, error) {
-	usersQ := query.Users
-	contactsQ := query.Contacts
 	friendIds := make([]int, 0)
 	err := contactsQ.Select(contactsQ.TargetID).Where(contactsQ.OwnerID.Eq(userId),
 		contactsQ.Type.Eq(utils.ContactTypeFriend)).Scan(&friendIds)

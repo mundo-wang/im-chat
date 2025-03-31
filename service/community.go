@@ -3,7 +3,6 @@ package service
 import (
 	"github.com/mundo-wang/wtool/wlog"
 	"im-chat/dao/model"
-	"im-chat/dao/query"
 	"im-chat/utils"
 )
 
@@ -11,8 +10,6 @@ type CommunityService struct {
 }
 
 func (c *CommunityService) LoadByUserId(userId int) ([]*model.Communities, error) {
-	communitiesQ := query.Communities
-	contactsQ := query.Contacts
 	communityIds := make([]int, 0)
 	err := contactsQ.Select(contactsQ.TargetID).Where(contactsQ.OwnerID.Eq(userId),
 		contactsQ.Type.Eq(utils.ContactTypeGroup)).Scan(&communityIds)
