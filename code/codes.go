@@ -9,4 +9,5 @@ var (
 	UserNameNotExist        = wresp.NewErrorCode(1004, "查询的用户名不存在")
 	PasswordNotCorrect      = wresp.NewErrorCode(1005, "密码不正确，请重新输入")
 	PasswordUnchanged       = wresp.NewErrorCode(1006, "新密码不能与旧密码相同，请重新输入")
+	JwtTokenInvalid         = wresp.NewErrorCode(1007, "无效的身份令牌，请重新登录")
 )

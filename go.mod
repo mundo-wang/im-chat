@@ -5,7 +5,9 @@ go 1.21.8
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/mundo-wang/wtool v1.0.7-0.20250329233758-f0aa2afa1a5e
+	github.com/golang-jwt/jwt/v5 v5.2.2
+	github.com/google/uuid v1.6.0
+	github.com/mundo-wang/wtool v1.0.6-0.20250326144930-654b0d8b984b
 	github.com/spf13/viper v1.20.0
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gen v0.3.26
@@ -29,6 +31,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

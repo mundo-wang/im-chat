@@ -5,6 +5,7 @@ type Config struct {
 	Redis   RedisConfig   `mapstructure:"redis"`
 	Timeout TimeoutConfig `mapstructure:"timeout"`
 	Server  ServerConfig  `mapstructure:"server"`
+	Jwt     JwtConfig     `mapstructure:"jwt"`
 }
 
 type MySQLConfig struct {
@@ -34,4 +35,8 @@ type TimeoutConfig struct {
 type ServerConfig struct {
 	Port int `mapstructure:"port"`
 	UDP  int `mapstructure:"udp"`
+}
+
+type JwtConfig struct {
+	SecretKey string `mapstructure:"secretKey"`
 }
