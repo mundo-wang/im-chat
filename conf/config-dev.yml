@@ -22,3 +22,6 @@ timeout:
 server:
   port: 8280
   udp: 3001
+
+jwt:
+  secretKey: "f8a20475-0411-42e8-a816-e7d17a0be3c5"

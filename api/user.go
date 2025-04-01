@@ -47,7 +47,7 @@ func (api *UserApi) CreateUser(c *gin.Context) (interface{}, error) {
 	return nil, nil
 }
 
-func (api *UserApi) FindByNamePwd(c *gin.Context) (interface{}, error) {
+func (api *UserApi) Login(c *gin.Context) (interface{}, error) {
 	req := &service.FindByNamePwdReq{}
 	err := c.ShouldBindJSON(req)
 	if err != nil {
@@ -56,14 +56,15 @@ func (api *UserApi) FindByNamePwd(c *gin.Context) (interface{}, error) {
 	}
 	userName := strings.TrimSpace(req.UserName)
 	password := strings.TrimSpace(req.Password)
-	user, err := api.UserService.FindByNamePwd(userName, password)
+	resp, jwtToken, err := api.UserService.FindByNamePwd(userName, password)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {
 			wlog.Error("call api.UserService.FindByNamePwd failed").Err(err).Field("req", req).Log()
 		}
 		return nil, err
 	}
-	return user, nil
+	c.Header("Authorization", jwtToken)
+	return resp, nil
 }
 
 func (api *UserApi) SearchFriends(c *gin.Context) (interface{}, error) {

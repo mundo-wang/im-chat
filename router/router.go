@@ -25,12 +25,13 @@ func SetRouter(s *wresp.Server) {
 	user := r.Group("/user")
 	{
 		user.POST("/create", s.WrapHandler(api.GetUserApi().CreateUser))
-		user.POST("/findByNamePwd", s.WrapHandler(api.GetUserApi().FindByNamePwd))
+		user.POST("/login", s.WrapHandler(api.GetUserApi().Login))
+		user.Use(s.WrapMiddleware(api.CheckAuthorization))
 		user.GET("/searchFriends", s.WrapHandler(api.GetUserApi().SearchFriends))
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
 	}
 
-	community := r.Group("/community")
+	community := r.Group("/community", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		community.GET("/loadByUserId", s.WrapHandler(api.GetCommunityApi().LoadByUserId))
 	}
