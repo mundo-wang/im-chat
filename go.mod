@@ -5,7 +5,7 @@ go 1.21.8
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/mundo-wang/wtool v1.0.6-0.20250326144930-654b0d8b984b
+	github.com/mundo-wang/wtool v1.0.7-0.20250329233758-f0aa2afa1a5e
 	github.com/spf13/viper v1.20.0
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gen v0.3.26
