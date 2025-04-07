@@ -1,6 +1,8 @@
 package service
 
-import "time"
+import (
+	"time"
+)
 
 type CreateUserReq struct {
 	UserName   string `json:"userName"`
@@ -28,9 +30,18 @@ type ChangePasswordReq struct {
 }
 
 type SearchFriendsResp struct {
-	Name      string    `json:"name"`
-	Phone     string    `json:"phone"`
-	Email     string    `json:"email"`
-	Avatar    string    `json:"avatar"`
-	LoginTime time.Time `json:"login_time"`
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	Phone  string `json:"phone"`
+	Email  string `json:"email"`
+	Avatar string `json:"avatar"`
+}
+
+type LoadByUserIdResp struct {
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	OwnerID     int    `json:"owner_id"`
+	Avatar      string `json:"avatar"`
+	Type        int    `json:"type"` // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
+	Description string `json:"description"`
 }

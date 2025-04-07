@@ -30,17 +30,12 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 	_users.ID = field.NewInt(tableName, "id")
 	_users.Name = field.NewString(tableName, "name")
 	_users.Password = field.NewString(tableName, "password")
+	_users.Salt = field.NewString(tableName, "salt")
 	_users.Phone = field.NewString(tableName, "phone")
 	_users.Email = field.NewString(tableName, "email")
-	_users.Identity = field.NewString(tableName, "identity")
-	_users.ClientInfo = field.NewString(tableName, "client_info")
+	_users.Avatar = field.NewString(tableName, "avatar")
 	_users.LoginTime = field.NewTime(tableName, "login_time")
 	_users.HeartbeatTime = field.NewTime(tableName, "heartbeat_time")
-	_users.LogoutTime = field.NewTime(tableName, "logout_time")
-	_users.IsLogout = field.NewInt(tableName, "is_logout")
-	_users.DeviceInfo = field.NewString(tableName, "device_info")
-	_users.Avatar = field.NewString(tableName, "avatar")
-	_users.Salt = field.NewString(tableName, "salt")
 	_users.CreatedAt = field.NewTime(tableName, "created_at")
 	_users.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_users.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -57,17 +52,12 @@ type users struct {
 	ID            field.Int
 	Name          field.String
 	Password      field.String
+	Salt          field.String
 	Phone         field.String
 	Email         field.String
-	Identity      field.String
-	ClientInfo    field.String
+	Avatar        field.String
 	LoginTime     field.Time
 	HeartbeatTime field.Time
-	LogoutTime    field.Time
-	IsLogout      field.Int // 0为未登出，1为已登出
-	DeviceInfo    field.String
-	Avatar        field.String
-	Salt          field.String
 	CreatedAt     field.Time
 	UpdatedAt     field.Time
 	DeletedAt     field.Field
@@ -90,17 +80,12 @@ func (u *users) updateTableName(table string) *users {
 	u.ID = field.NewInt(table, "id")
 	u.Name = field.NewString(table, "name")
 	u.Password = field.NewString(table, "password")
+	u.Salt = field.NewString(table, "salt")
 	u.Phone = field.NewString(table, "phone")
 	u.Email = field.NewString(table, "email")
-	u.Identity = field.NewString(table, "identity")
-	u.ClientInfo = field.NewString(table, "client_info")
+	u.Avatar = field.NewString(table, "avatar")
 	u.LoginTime = field.NewTime(table, "login_time")
 	u.HeartbeatTime = field.NewTime(table, "heartbeat_time")
-	u.LogoutTime = field.NewTime(table, "logout_time")
-	u.IsLogout = field.NewInt(table, "is_logout")
-	u.DeviceInfo = field.NewString(table, "device_info")
-	u.Avatar = field.NewString(table, "avatar")
-	u.Salt = field.NewString(table, "salt")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")
 	u.DeletedAt = field.NewField(table, "deleted_at")
@@ -120,21 +105,16 @@ func (u *users) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *users) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 17)
+	u.fieldMap = make(map[string]field.Expr, 12)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["name"] = u.Name
 	u.fieldMap["password"] = u.Password
+	u.fieldMap["salt"] = u.Salt
 	u.fieldMap["phone"] = u.Phone
 	u.fieldMap["email"] = u.Email
-	u.fieldMap["identity"] = u.Identity
-	u.fieldMap["client_info"] = u.ClientInfo
+	u.fieldMap["avatar"] = u.Avatar
 	u.fieldMap["login_time"] = u.LoginTime
 	u.fieldMap["heartbeat_time"] = u.HeartbeatTime
-	u.fieldMap["logout_time"] = u.LogoutTime
-	u.fieldMap["is_logout"] = u.IsLogout
-	u.fieldMap["device_info"] = u.DeviceInfo
-	u.fieldMap["avatar"] = u.Avatar
-	u.fieldMap["salt"] = u.Salt
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt
 	u.fieldMap["deleted_at"] = u.DeletedAt

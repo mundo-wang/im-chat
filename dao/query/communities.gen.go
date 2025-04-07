@@ -30,7 +30,8 @@ func newCommunities(db *gorm.DB, opts ...gen.DOOption) communities {
 	_communities.ID = field.NewInt(tableName, "id")
 	_communities.Name = field.NewString(tableName, "name")
 	_communities.OwnerID = field.NewInt(tableName, "owner_id")
-	_communities.Img = field.NewString(tableName, "img")
+	_communities.Avatar = field.NewString(tableName, "avatar")
+	_communities.Type = field.NewInt(tableName, "type")
 	_communities.Description = field.NewString(tableName, "description")
 	_communities.CreatedAt = field.NewTime(tableName, "created_at")
 	_communities.UpdatedAt = field.NewTime(tableName, "updated_at")
@@ -48,7 +49,8 @@ type communities struct {
 	ID          field.Int
 	Name        field.String
 	OwnerID     field.Int
-	Img         field.String
+	Avatar      field.String
+	Type        field.Int // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
 	Description field.String
 	CreatedAt   field.Time
 	UpdatedAt   field.Time
@@ -72,7 +74,8 @@ func (c *communities) updateTableName(table string) *communities {
 	c.ID = field.NewInt(table, "id")
 	c.Name = field.NewString(table, "name")
 	c.OwnerID = field.NewInt(table, "owner_id")
-	c.Img = field.NewString(table, "img")
+	c.Avatar = field.NewString(table, "avatar")
+	c.Type = field.NewInt(table, "type")
 	c.Description = field.NewString(table, "description")
 	c.CreatedAt = field.NewTime(table, "created_at")
 	c.UpdatedAt = field.NewTime(table, "updated_at")
@@ -93,11 +96,12 @@ func (c *communities) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *communities) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 8)
+	c.fieldMap = make(map[string]field.Expr, 9)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["name"] = c.Name
 	c.fieldMap["owner_id"] = c.OwnerID
-	c.fieldMap["img"] = c.Img
+	c.fieldMap["avatar"] = c.Avatar
+	c.fieldMap["type"] = c.Type
 	c.fieldMap["description"] = c.Description
 	c.fieldMap["created_at"] = c.CreatedAt
 	c.fieldMap["updated_at"] = c.UpdatedAt

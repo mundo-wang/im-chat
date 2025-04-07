@@ -32,7 +32,7 @@ func (u *UserService) CreateUser(userName, password string) error {
 		Password: signature,
 		Salt:     salt,
 	}
-	err = usersQ.Omit(usersQ.LoginTime, usersQ.HeartbeatTime, usersQ.LogoutTime).Create(user)
+	err = usersQ.Omit(usersQ.LoginTime, usersQ.HeartbeatTime).Create(user)
 	if err != nil {
 		wlog.Error("call usersQ.Create failed").Err(err).Field("user", user).Log()
 		return err

@@ -20,7 +20,6 @@ var (
 	Communities *communities
 	Contacts    *contacts
 	Messages    *messages
-	UserGroups  *userGroups
 	Users       *users
 )
 
@@ -29,7 +28,6 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	Communities = &Q.Communities
 	Contacts = &Q.Contacts
 	Messages = &Q.Messages
-	UserGroups = &Q.UserGroups
 	Users = &Q.Users
 }
 
@@ -39,7 +37,6 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		Communities: newCommunities(db, opts...),
 		Contacts:    newContacts(db, opts...),
 		Messages:    newMessages(db, opts...),
-		UserGroups:  newUserGroups(db, opts...),
 		Users:       newUsers(db, opts...),
 	}
 }
@@ -50,7 +47,6 @@ type Query struct {
 	Communities communities
 	Contacts    contacts
 	Messages    messages
-	UserGroups  userGroups
 	Users       users
 }
 
@@ -62,7 +58,6 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Communities: q.Communities.clone(db),
 		Contacts:    q.Contacts.clone(db),
 		Messages:    q.Messages.clone(db),
-		UserGroups:  q.UserGroups.clone(db),
 		Users:       q.Users.clone(db),
 	}
 }
@@ -81,7 +76,6 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		Communities: q.Communities.replaceDB(db),
 		Contacts:    q.Contacts.replaceDB(db),
 		Messages:    q.Messages.replaceDB(db),
-		UserGroups:  q.UserGroups.replaceDB(db),
 		Users:       q.Users.replaceDB(db),
 	}
 }
@@ -90,7 +84,6 @@ type queryCtx struct {
 	Communities ICommunitiesDo
 	Contacts    IContactsDo
 	Messages    IMessagesDo
-	UserGroups  IUserGroupsDo
 	Users       IUsersDo
 }
 
@@ -99,7 +92,6 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Communities: q.Communities.WithContext(ctx),
 		Contacts:    q.Contacts.WithContext(ctx),
 		Messages:    q.Messages.WithContext(ctx),
-		UserGroups:  q.UserGroups.WithContext(ctx),
 		Users:       q.Users.WithContext(ctx),
 	}
 }

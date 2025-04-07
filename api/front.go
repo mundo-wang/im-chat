@@ -69,7 +69,7 @@ func (api *FrontApi) ToChat(c *gin.Context) (interface{}, error) {
 	token := c.Query("token")
 	user := model.Users{}
 	user.ID = userId
-	user.Identity = token
+	_ = token
 	err = ind.Execute(c.Writer, user)
 	if err != nil {
 		wlog.Error("call ind.Execute failed").Err(err).Field("user", user).Log()
