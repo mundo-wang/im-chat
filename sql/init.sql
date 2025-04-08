@@ -35,7 +35,6 @@ CREATE TABLE contacts (
     owner_id int unsigned NOT NULL,
     target_id int unsigned NOT NULL COMMENT '对应的人/群ID',
     type tinyint NOT NULL COMMENT '1为好友，2为群组',
-    description text DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at datetime DEFAULT NULL

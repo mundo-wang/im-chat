@@ -34,5 +34,6 @@ func SetRouter(s *wresp.Server) {
 	community := r.Group("/community", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		community.GET("/loadByUserId", s.WrapHandler(api.GetCommunityApi().LoadByUserId))
+		community.POST("/create", s.WrapHandler(api.GetCommunityApi().Create))
 	}
 }

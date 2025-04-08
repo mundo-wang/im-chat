@@ -29,3 +29,20 @@ func (api *CommunityApi) LoadByUserId(c *gin.Context) (interface{}, error) {
 	}
 	return communities, nil
 }
+
+func (api *CommunityApi) Create(c *gin.Context) (interface{}, error) {
+	userId := c.GetInt("userID") // GetInt方法，如果没有对应key，或者断言int失败，都会返回默认值0
+	req := &service.CreateCommunityReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	req.OwnerID = userId
+	err = api.CommunityService.Create(req)
+	if err != nil {
+		wlog.Error("call api.CommunityService.Create failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return nil, nil
+}

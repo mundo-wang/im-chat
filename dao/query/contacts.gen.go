@@ -31,7 +31,6 @@ func newContacts(db *gorm.DB, opts ...gen.DOOption) contacts {
 	_contacts.OwnerID = field.NewInt(tableName, "owner_id")
 	_contacts.TargetID = field.NewInt(tableName, "target_id")
 	_contacts.Type = field.NewInt(tableName, "type")
-	_contacts.Description = field.NewString(tableName, "description")
 	_contacts.CreatedAt = field.NewTime(tableName, "created_at")
 	_contacts.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_contacts.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -44,15 +43,14 @@ func newContacts(db *gorm.DB, opts ...gen.DOOption) contacts {
 type contacts struct {
 	contactsDo
 
-	ALL         field.Asterisk
-	ID          field.Int
-	OwnerID     field.Int
-	TargetID    field.Int // 对应的人/群ID
-	Type        field.Int // 1为好友，2为群组
-	Description field.String
-	CreatedAt   field.Time
-	UpdatedAt   field.Time
-	DeletedAt   field.Field
+	ALL       field.Asterisk
+	ID        field.Int
+	OwnerID   field.Int
+	TargetID  field.Int // 对应的人/群ID
+	Type      field.Int // 1为好友，2为群组
+	CreatedAt field.Time
+	UpdatedAt field.Time
+	DeletedAt field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -73,7 +71,6 @@ func (c *contacts) updateTableName(table string) *contacts {
 	c.OwnerID = field.NewInt(table, "owner_id")
 	c.TargetID = field.NewInt(table, "target_id")
 	c.Type = field.NewInt(table, "type")
-	c.Description = field.NewString(table, "description")
 	c.CreatedAt = field.NewTime(table, "created_at")
 	c.UpdatedAt = field.NewTime(table, "updated_at")
 	c.DeletedAt = field.NewField(table, "deleted_at")
@@ -93,12 +90,11 @@ func (c *contacts) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *contacts) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 8)
+	c.fieldMap = make(map[string]field.Expr, 7)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["owner_id"] = c.OwnerID
 	c.fieldMap["target_id"] = c.TargetID
 	c.fieldMap["type"] = c.Type
-	c.fieldMap["description"] = c.Description
 	c.fieldMap["created_at"] = c.CreatedAt
 	c.fieldMap["updated_at"] = c.UpdatedAt
 	c.fieldMap["deleted_at"] = c.DeletedAt

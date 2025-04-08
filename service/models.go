@@ -45,3 +45,11 @@ type LoadByUserIdResp struct {
 	Type        int    `json:"type"` // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
 	Description string `json:"description"`
 }
+
+type CreateCommunityReq struct {
+	Name        string `json:"name"`
+	OwnerID     int    `json:"ownerID"`
+	Avatar      string `json:"avatar"`
+	Type        int    `json:"type"`
+	Description string `json:"description"`
+}

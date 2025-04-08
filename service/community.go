@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
+	"im-chat/dao/model"
 	"im-chat/utils"
 )
 
@@ -29,4 +30,29 @@ func (c *CommunityService) LoadByUserId(userId int) ([]*LoadByUserIdResp, error)
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (c *CommunityService) Create(req *CreateCommunityReq) error {
+	community := &model.Communities{}
+	err := copier.Copy(community, req)
+	if err != nil {
+		wlog.Error("call copier.Copy failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	err = communitiesQ.Create(community)
+	if err != nil {
+		wlog.Error("call communitiesQ.Create failed").Err(err).Field("community", community).Log()
+		return err
+	}
+	contact := &model.Contacts{
+		OwnerID:  req.OwnerID,
+		TargetID: community.ID,
+		Type:     utils.ContactTypeGroup,
+	}
+	err = contactsQ.Create(contact)
+	if err != nil {
+		wlog.Error("call contactsQ.Create failed").Err(err).Field("contact", contact).Log()
+		return err
+	}
+	return nil
 }
