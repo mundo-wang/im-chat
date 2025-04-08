@@ -133,3 +133,39 @@ func (u *UserService) ChangePassword(userName, password, newPassword string) err
 	}
 	return nil
 }
+
+func (u *UserService) AddFriend(userCode string, userId int) error {
+	targetUser, err := usersQ.Where(usersQ.UserCode.Eq(userCode)).First()
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return code.UserCodeNotExist
+		}
+		wlog.Error("call usersQ.First failed").Err(err).Field("userCode", userCode).Log()
+		return err
+	}
+	count, err := contactsQ.Where(contactsQ.Where(contactsQ.OwnerID.Eq(userId), contactsQ.TargetID.Eq(targetUser.ID)).
+		Or(contactsQ.OwnerID.Eq(targetUser.ID), contactsQ.TargetID.Eq(userId))).Where(contactsQ.Type.Eq(utils.ContactTypeFriend)).Count()
+	if err != nil {
+		wlog.Error("call contactsQ.Count failed").Err(err).Field("userId", userId).Field("targetId", targetUser.ID).Log()
+		return err
+	}
+	if count != 0 {
+		return code.AlreadyFriends
+	}
+	contact1 := &model.Contacts{
+		OwnerID:  userId,
+		TargetID: targetUser.ID,
+		Type:     utils.ContactTypeFriend,
+	}
+	contact2 := &model.Contacts{
+		OwnerID:  targetUser.ID,
+		TargetID: userId,
+		Type:     utils.ContactTypeFriend,
+	}
+	err = contactsQ.Create(contact1, contact2)
+	if err != nil {
+		wlog.Error("call contactsQ.Create failed").Err(err).Field("contact1", contact1).Log()
+		return err
+	}
+	return nil
+}

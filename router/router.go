@@ -29,11 +29,13 @@ func SetRouter(s *wresp.Server) {
 		user.Use(s.WrapMiddleware(api.CheckAuthorization)) // 上面两个用户接口不走鉴权中间件
 		user.GET("/searchFriends", s.WrapHandler(api.GetUserApi().SearchFriends))
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
+		user.GET("/addFriend", s.WrapHandler(api.GetUserApi().AddFriend))
 	}
 
 	community := r.Group("/community", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		community.GET("/loadByUserId", s.WrapHandler(api.GetCommunityApi().LoadByUserId))
 		community.POST("/create", s.WrapHandler(api.GetCommunityApi().Create))
+		community.GET("/joinGroup", s.WrapHandler(api.GetCommunityApi().JoinGroup))
 	}
 }

@@ -13,4 +13,8 @@ var (
 	UserIdNotSet            = wresp.NewErrorCode(1008, "用户ID未获取到")
 	UserIdFormatWrong       = wresp.NewErrorCode(1009, "用户ID的格式有误")
 	GroupNameAlreadyExist   = wresp.NewErrorCode(1010, "该群名已经存在")
+	UserCodeNotExist        = wresp.NewErrorCode(1011, "查询的用户code不存在")
+	AlreadyFriends          = wresp.NewErrorCode(1012, "你们已经是好友了")
+	GroupCodeNotExist       = wresp.NewErrorCode(1013, "查询的群聊code不存在")
+	AlreadyInGroup          = wresp.NewErrorCode(1014, "你已经在此群里了")
 )

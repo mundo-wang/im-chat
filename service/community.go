@@ -1,8 +1,10 @@
 package service
 
 import (
+	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
+	"gorm.io/gorm"
 	"im-chat/code"
 	"im-chat/dao/model"
 	"im-chat/utils"
@@ -73,6 +75,37 @@ func (c *CommunityService) Create(req *CreateCommunityReq) error {
 	contact := &model.Contacts{
 		OwnerID:  req.OwnerID,
 		TargetID: community.ID,
+		Type:     utils.ContactTypeGroup,
+	}
+	err = contactsQ.Create(contact)
+	if err != nil {
+		wlog.Error("call contactsQ.Create failed").Err(err).Field("contact", contact).Log()
+		return err
+	}
+	return nil
+}
+
+func (c *CommunityService) JoinGroup(groupCode string, userId int) error {
+	targetCommunity, err := communitiesQ.Where(communitiesQ.CommunityCode.Eq(groupCode)).First()
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return code.GroupCodeNotExist
+		}
+		wlog.Error("call communitiesQ.First failed").Err(err).Field("groupCode", groupCode).Log()
+		return err
+	}
+	count, err := contactsQ.Where(contactsQ.OwnerID.Eq(userId), contactsQ.TargetID.Eq(targetCommunity.ID),
+		contactsQ.Type.Eq(utils.ContactTypeGroup)).Count()
+	if err != nil {
+		wlog.Error("call contactsQ.Count failed").Err(err).Field("groupCode", groupCode).Log()
+		return err
+	}
+	if count != 0 {
+		return code.AlreadyInGroup
+	}
+	contact := &model.Contacts{
+		OwnerID:  userId,
+		TargetID: targetCommunity.ID,
 		Type:     utils.ContactTypeGroup,
 	}
 	err = contactsQ.Create(contact)

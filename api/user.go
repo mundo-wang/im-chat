@@ -101,3 +101,16 @@ func (api *UserApi) ChangePassword(c *gin.Context) (interface{}, error) {
 	}
 	return nil, nil
 }
+
+func (api *UserApi) AddFriend(c *gin.Context) (interface{}, error) {
+	userCode := c.Query("userCode")
+	userId := c.GetInt("userId")
+	err := api.UserService.AddFriend(userCode, userId)
+	if err != nil {
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call api.UserService.AddFriend failed").Err(err).Field("userCode", userCode).Log()
+		}
+		return nil, err
+	}
+	return nil, nil
+}
