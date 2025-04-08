@@ -28,6 +28,7 @@ func newCommunities(db *gorm.DB, opts ...gen.DOOption) communities {
 	tableName := _communities.communitiesDo.TableName()
 	_communities.ALL = field.NewAsterisk(tableName)
 	_communities.ID = field.NewInt(tableName, "id")
+	_communities.CommunityCode = field.NewString(tableName, "community_code")
 	_communities.Name = field.NewString(tableName, "name")
 	_communities.OwnerID = field.NewInt(tableName, "owner_id")
 	_communities.Avatar = field.NewString(tableName, "avatar")
@@ -45,16 +46,17 @@ func newCommunities(db *gorm.DB, opts ...gen.DOOption) communities {
 type communities struct {
 	communitiesDo
 
-	ALL         field.Asterisk
-	ID          field.Int
-	Name        field.String
-	OwnerID     field.Int
-	Avatar      field.String
-	Type        field.Int // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
-	Description field.String
-	CreatedAt   field.Time
-	UpdatedAt   field.Time
-	DeletedAt   field.Field
+	ALL           field.Asterisk
+	ID            field.Int
+	CommunityCode field.String
+	Name          field.String
+	OwnerID       field.Int
+	Avatar        field.String
+	Type          field.Int // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
+	Description   field.String
+	CreatedAt     field.Time
+	UpdatedAt     field.Time
+	DeletedAt     field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -72,6 +74,7 @@ func (c communities) As(alias string) *communities {
 func (c *communities) updateTableName(table string) *communities {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewInt(table, "id")
+	c.CommunityCode = field.NewString(table, "community_code")
 	c.Name = field.NewString(table, "name")
 	c.OwnerID = field.NewInt(table, "owner_id")
 	c.Avatar = field.NewString(table, "avatar")
@@ -96,8 +99,9 @@ func (c *communities) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *communities) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 9)
+	c.fieldMap = make(map[string]field.Expr, 10)
 	c.fieldMap["id"] = c.ID
+	c.fieldMap["community_code"] = c.CommunityCode
 	c.fieldMap["name"] = c.Name
 	c.fieldMap["owner_id"] = c.OwnerID
 	c.fieldMap["avatar"] = c.Avatar

@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mundo-wang/wtool/wlog"
+	"github.com/mundo-wang/wtool/wresp"
 	"im-chat/service"
 	"strconv"
 )
@@ -41,8 +42,14 @@ func (api *CommunityApi) Create(c *gin.Context) (interface{}, error) {
 	req.OwnerID = userId
 	err = api.CommunityService.Create(req)
 	if err != nil {
-		wlog.Error("call api.CommunityService.Create failed").Err(err).Field("req", req).Log()
+		if !wresp.IsErrorCode(err) {
+			wlog.Error("call api.CommunityService.Create failed").Err(err).Field("req", req).Log()
+		}
 		return nil, err
 	}
+	return nil, nil
+}
+
+func (api *CommunityApi) JoinGroup(c *gin.Context) (interface{}, error) {
 	return nil, nil
 }

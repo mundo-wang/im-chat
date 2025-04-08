@@ -27,7 +27,24 @@ func (u *UserService) CreateUser(userName, password string) error {
 		wlog.Error("call utils.GenerateSignature failed").Err(err).Log()
 		return err
 	}
+	var userCode string
+	for {
+		userCode, err = utils.GenerateRandomDigits(10)
+		if err != nil {
+			wlog.Error("call utils.GenerateRandomDigits failed").Err(err).Log()
+			return err
+		}
+		count, err = usersQ.Where(usersQ.UserCode.Eq(userCode)).Count()
+		if err != nil {
+			wlog.Error("call usersQ.Count failed").Err(err).Field("userCode", userCode).Log()
+			return err
+		}
+		if count == 0 {
+			break
+		}
+	}
 	user := &model.Users{
+		UserCode: userCode,
 		Name:     userName,
 		Password: signature,
 		Salt:     salt,

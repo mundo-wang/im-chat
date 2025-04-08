@@ -14,15 +14,16 @@ const TableNameCommunities = "communities"
 
 // Communities mapped from table <communities>
 type Communities struct {
-	ID          int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	Name        string         `gorm:"column:name;not null" json:"name"`
-	OwnerID     int            `gorm:"column:owner_id;not null" json:"owner_id"`
-	Avatar      string         `gorm:"column:avatar" json:"avatar"`
-	Type        int            `gorm:"column:type;not null;comment:0.默认 1.兴趣爱好 2.行业交流 3.生活休闲" json:"type"` // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
-	Description string         `gorm:"column:description" json:"description"`
-	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID            int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	CommunityCode string         `gorm:"column:community_code;not null" json:"community_code"`
+	Name          string         `gorm:"column:name;not null" json:"name"`
+	OwnerID       int            `gorm:"column:owner_id;not null" json:"owner_id"`
+	Avatar        string         `gorm:"column:avatar" json:"avatar"`
+	Type          int            `gorm:"column:type;not null;comment:0.默认 1.兴趣爱好 2.行业交流 3.生活休闲" json:"type"` // 0.默认 1.兴趣爱好 2.行业交流 3.生活休闲
+	Description   string         `gorm:"column:description" json:"description"`
+	CreatedAt     time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt     time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 }
 
 // TableName Communities's table name

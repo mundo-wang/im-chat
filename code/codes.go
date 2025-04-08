@@ -12,4 +12,5 @@ var (
 	JwtTokenInvalid         = wresp.NewErrorCode(1007, "无效的身份令牌，请重新登录")
 	UserIdNotSet            = wresp.NewErrorCode(1008, "用户ID未获取到")
 	UserIdFormatWrong       = wresp.NewErrorCode(1009, "用户ID的格式有误")
+	GroupNameAlreadyExist   = wresp.NewErrorCode(1010, "该群名已经存在")
 )

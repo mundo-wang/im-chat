@@ -15,6 +15,7 @@ const TableNameUsers = "users"
 // Users mapped from table <users>
 type Users struct {
 	ID            int            `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	UserCode      string         `gorm:"column:user_code;not null" json:"user_code"`
 	Name          string         `gorm:"column:name;not null" json:"name"`
 	Password      string         `gorm:"column:password;not null" json:"password"`
 	Salt          string         `gorm:"column:salt" json:"salt"`

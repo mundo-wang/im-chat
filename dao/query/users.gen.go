@@ -28,6 +28,7 @@ func newUsers(db *gorm.DB, opts ...gen.DOOption) users {
 	tableName := _users.usersDo.TableName()
 	_users.ALL = field.NewAsterisk(tableName)
 	_users.ID = field.NewInt(tableName, "id")
+	_users.UserCode = field.NewString(tableName, "user_code")
 	_users.Name = field.NewString(tableName, "name")
 	_users.Password = field.NewString(tableName, "password")
 	_users.Salt = field.NewString(tableName, "salt")
@@ -50,6 +51,7 @@ type users struct {
 
 	ALL           field.Asterisk
 	ID            field.Int
+	UserCode      field.String
 	Name          field.String
 	Password      field.String
 	Salt          field.String
@@ -78,6 +80,7 @@ func (u users) As(alias string) *users {
 func (u *users) updateTableName(table string) *users {
 	u.ALL = field.NewAsterisk(table)
 	u.ID = field.NewInt(table, "id")
+	u.UserCode = field.NewString(table, "user_code")
 	u.Name = field.NewString(table, "name")
 	u.Password = field.NewString(table, "password")
 	u.Salt = field.NewString(table, "salt")
@@ -105,8 +108,9 @@ func (u *users) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *users) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 12)
+	u.fieldMap = make(map[string]field.Expr, 13)
 	u.fieldMap["id"] = u.ID
+	u.fieldMap["user_code"] = u.UserCode
 	u.fieldMap["name"] = u.Name
 	u.fieldMap["password"] = u.Password
 	u.fieldMap["salt"] = u.Salt

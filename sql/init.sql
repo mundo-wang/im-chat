@@ -4,6 +4,7 @@
 
 CREATE TABLE users (
     id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_code CHAR(10) NOT NULL,
     name varchar(100) NOT NULL,
     password varchar(255) NOT NULL,
     salt varchar(255) DEFAULT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE users (
 
 CREATE TABLE communities (
     id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    community_code CHAR(10) NOT NULL,
     name varchar(100) NOT NULL,
     owner_id int unsigned NOT NULL,
     avatar varchar(255) DEFAULT NULL,

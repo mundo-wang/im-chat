@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
+	"im-chat/code"
 	"im-chat/dao/model"
 	"im-chat/utils"
 )
@@ -33,12 +34,37 @@ func (c *CommunityService) LoadByUserId(userId int) ([]*LoadByUserIdResp, error)
 }
 
 func (c *CommunityService) Create(req *CreateCommunityReq) error {
+	count, err := communitiesQ.Where(communitiesQ.Name.Eq(req.Name)).Count()
+	if err != nil {
+		wlog.Error("call communitiesQ.Count failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	if count != 0 {
+		return code.GroupNameAlreadyExist
+	}
 	community := &model.Communities{}
-	err := copier.Copy(community, req)
+	err = copier.Copy(community, req)
 	if err != nil {
 		wlog.Error("call copier.Copy failed").Err(err).Field("req", req).Log()
 		return err
 	}
+	var communityCode string
+	for {
+		communityCode, err = utils.GenerateRandomDigits(10)
+		if err != nil {
+			wlog.Error("call utils.GenerateRandomDigits failed").Err(err).Log()
+			return err
+		}
+		count, err = communitiesQ.Where(communitiesQ.CommunityCode.Eq(communityCode)).Count()
+		if err != nil {
+			wlog.Error("call usersQ.Count failed").Err(err).Field("communityCode", communityCode).Log()
+			return err
+		}
+		if count == 0 {
+			break
+		}
+	}
+	community.CommunityCode = communityCode
 	err = communitiesQ.Create(community)
 	if err != nil {
 		wlog.Error("call communitiesQ.Create failed").Err(err).Field("community", community).Log()
