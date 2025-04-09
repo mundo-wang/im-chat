@@ -7,6 +7,7 @@ import (
 
 func SetRouter(s *wresp.Server) {
 	r := s.Router
+	r.MaxMultipartMemory = 8 << 20
 	// 将asset/目录映射到/asset接口路径，提供静态文件访问功能
 	r.Static("/asset", "asset/")
 	// 将/favicon.ico路由直接映射到asset/images/favicon.ico这个具体的文件，用于提供单个静态文件的访问
@@ -27,15 +28,22 @@ func SetRouter(s *wresp.Server) {
 		user.POST("/create", s.WrapHandler(api.GetUserApi().CreateUser))
 		user.POST("/login", s.WrapHandler(api.GetUserApi().Login))
 		user.Use(s.WrapMiddleware(api.CheckAuthorization)) // 上面两个用户接口不走鉴权中间件
+		user.POST("/updateUser", s.WrapHandler(api.GetUserApi().UpdateUser))
 		user.GET("/searchFriends", s.WrapHandler(api.GetUserApi().SearchFriends))
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
 		user.GET("/addFriend", s.WrapHandler(api.GetUserApi().AddFriend))
 	}
-
+	// 与群组有关的接口
 	community := r.Group("/community", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		community.GET("/loadByUserId", s.WrapHandler(api.GetCommunityApi().LoadByUserId))
 		community.POST("/create", s.WrapHandler(api.GetCommunityApi().Create))
 		community.GET("/joinGroup", s.WrapHandler(api.GetCommunityApi().JoinGroup))
+	}
+	// 上传下载文件
+	attach := r.Group("/attach", s.WrapMiddleware(api.CheckAuthorization))
+	{
+		attach.POST("/upload", s.WrapHandler(api.Upload))
+		attach.GET("/download", s.WrapFileDownload(api.Download, false))
 	}
 }

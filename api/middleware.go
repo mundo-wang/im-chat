@@ -4,11 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mundo-wang/wtool/wlog"
 	"github.com/mundo-wang/wtool/wresp"
+	"im-chat/code"
 	"im-chat/utils"
 )
 
 func CheckAuthorization(c *gin.Context) error {
 	jwtToken := c.GetHeader(utils.Authorization)
+	if jwtToken == "" {
+		return code.JwtTokenNotExist
+	}
 	userClaims, err := utils.ParseJwtToken(jwtToken)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {

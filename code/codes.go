@@ -17,4 +17,6 @@ var (
 	AlreadyFriends          = wresp.NewErrorCode(1012, "你们已经是好友了")
 	GroupCodeNotExist       = wresp.NewErrorCode(1013, "查询的群聊code不存在")
 	AlreadyInGroup          = wresp.NewErrorCode(1014, "你已经在此群里了")
+	FileNotExist            = wresp.NewErrorCode(1015, "文件未找到")
+	JwtTokenNotExist        = wresp.NewErrorCode(1016, "未获取到Token")
 )

@@ -67,6 +67,10 @@ func (api *UserApi) Login(c *gin.Context) (interface{}, error) {
 	return resp, nil
 }
 
+func (api *UserApi) UpdateUser(c *gin.Context) (interface{}, error) {
+	return nil, nil
+}
+
 func (api *UserApi) SearchFriends(c *gin.Context) (interface{}, error) {
 	userIdStr := c.Query("userId")
 	userId, err := strconv.Atoi(userIdStr)
