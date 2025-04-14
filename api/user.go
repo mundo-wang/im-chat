@@ -68,6 +68,17 @@ func (api *UserApi) Login(c *gin.Context) (interface{}, error) {
 }
 
 func (api *UserApi) UpdateUser(c *gin.Context) (interface{}, error) {
+	req := &service.UpdateUserReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	err = api.UserService.UpdateUser(req)
+	if err != nil {
+		wlog.Error("call api.UserService.UpdateUser failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
 	return nil, nil
 }
 

@@ -84,6 +84,21 @@ func (u *UserService) FindByNamePwd(userName, password string) (*FindByNamePwdRe
 	return resp, jwtToken, nil
 }
 
+func (u *UserService) UpdateUser(req *UpdateUserReq) error {
+	user := &model.Users{}
+	err := copier.Copy(user, req)
+	if err != nil {
+		wlog.Error("call copier.Copy failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	_, err = usersQ.Updates(user)
+	if err != nil {
+		wlog.Error("call usersQ.Updates failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	return nil
+}
+
 func (u *UserService) SearchFriends(userId int) ([]*SearchFriendsResp, error) {
 	friendIds := make([]int, 0)
 	err := contactsQ.Select(contactsQ.TargetID).Where(contactsQ.OwnerID.Eq(userId),

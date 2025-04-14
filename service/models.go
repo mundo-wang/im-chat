@@ -31,6 +31,14 @@ type ChangePasswordReq struct {
 	NewPassword string `json:"newPassword"`
 }
 
+type UpdateUserReq struct {
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	Phone  string `json:"phone"`
+	Email  string `json:"email"`
+	Avatar string `json:"avatar"`
+}
+
 type SearchFriendsResp struct {
 	ID       int    `json:"id"`
 	UserCode string `json:"userCode"`
