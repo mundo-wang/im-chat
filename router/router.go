@@ -47,6 +47,6 @@ func SetRouter(s *wresp.Server) {
 	attach := r.Group("/attach", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		attach.POST("/upload", s.WrapHandler(api.Upload))
-		attach.GET("/download", s.WrapFileDownload(api.Download, false))
+		attach.GET("/download", s.WrapFileDownload(api.Download, false)) // false代表不触发下载
 	}
 }
