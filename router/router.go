@@ -43,7 +43,7 @@ func SetRouter(s *wresp.Server) {
 		community.GET("/joinGroup", s.WrapHandler(api.GetCommunityApi().JoinGroup))
 	}
 
-	// 上传下载文件
+	// 上传下载文件接口
 	attach := r.Group("/attach", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		attach.POST("/upload", s.WrapHandler(api.Upload))
