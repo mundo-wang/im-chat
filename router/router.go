@@ -22,6 +22,7 @@ func SetRouter(s *wresp.Server) {
 		front.GET("/toRegister", s.WrapHandler(api.GetFrontApi().ToRegister))
 		front.GET("/toChat", s.WrapHandler(api.GetFrontApi().ToChat))
 	}
+
 	// 与用户相关的接口
 	user := r.Group("/user")
 	{
@@ -33,6 +34,7 @@ func SetRouter(s *wresp.Server) {
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
 		user.GET("/addFriend", s.WrapHandler(api.GetUserApi().AddFriend))
 	}
+
 	// 与群组有关的接口
 	community := r.Group("/community", s.WrapMiddleware(api.CheckAuthorization))
 	{
@@ -40,6 +42,7 @@ func SetRouter(s *wresp.Server) {
 		community.POST("/create", s.WrapHandler(api.GetCommunityApi().Create))
 		community.GET("/joinGroup", s.WrapHandler(api.GetCommunityApi().JoinGroup))
 	}
+
 	// 上传下载文件
 	attach := r.Group("/attach", s.WrapMiddleware(api.CheckAuthorization))
 	{
