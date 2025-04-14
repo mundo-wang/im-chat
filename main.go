@@ -20,7 +20,7 @@ func main() {
 	}
 	query.SetDefault(db.GetDB())
 	service.InitDao()
-	wlog.Info("InitMySQL complete").Log()
+	wlog.Info("InitMySQL complete!").Log()
 	utils.InitRedis()
 	s := NewServer()
 	err = s.Router.Run(fmt.Sprintf(":%d", utils.Config.Server.Port))
