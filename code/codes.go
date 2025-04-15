@@ -19,4 +19,5 @@ var (
 	AlreadyInGroup          = wresp.NewErrorCode(1014, "你已经在此群里了")
 	FileNotExist            = wresp.NewErrorCode(1015, "文件未找到")
 	JwtTokenNotExist        = wresp.NewErrorCode(1016, "未获取到Token")
+	AnotherPerson           = wresp.NewErrorCode(1017, "不能修改他人的个人信息")
 )
