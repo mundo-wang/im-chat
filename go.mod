@@ -7,7 +7,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/google/uuid v1.6.0
-	github.com/mundo-wang/wtool v1.0.8
+	github.com/mundo-wang/wtool v1.0.9
 	github.com/spf13/viper v1.20.0
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gen v0.3.26
