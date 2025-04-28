@@ -18,9 +18,9 @@ func (q *QuestionSessionService) GenerateQuestions(c *gin.Context, req *Generate
 		Status:     utils.GenerateStatusGenerating,
 		PositionID: req.PositionId,
 		AgentCode:  req.AgentCode,
-		UserID:     c.GetInt64("userId"),
-		Username:   c.GetString("userName"),
-		CreatedBy:  c.GetString("userName"),
+		UserID:     c.GetInt64(utils.ContextUserIDKey),
+		Username:   c.GetString(utils.ContextUserNameKey),
+		CreatedBy:  c.GetString(utils.ContextUserNameKey),
 	}
 	err := questionSessionQ.Create(questionSession)
 	if err != nil {
@@ -35,7 +35,7 @@ func (q *QuestionSessionService) GenerateQuestions(c *gin.Context, req *Generate
 		AgentCode:    req.AgentCode,
 		PositionID:   req.PositionId,
 		SessionRefID: sessionId,
-		CreatedBy:    c.GetString("userName"),
+		CreatedBy:    c.GetString(utils.ContextUserNameKey),
 	}
 	err = questionsQ.Create(question)
 	if err != nil {

@@ -20,8 +20,8 @@ func CheckAuthorization(c *gin.Context) error {
 		}
 		return err
 	}
-	c.Set("userId", userClaims.UserID)
-	c.Set("userName", userClaims.UserName)
-	c.Set("phone", userClaims.Phone)
+	c.Set(utils.ContextUserIDKey, userClaims.UserID)
+	c.Set(utils.ContextUserNameKey, userClaims.UserName)
+	c.Set(utils.ContextPhoneKey, userClaims.Phone)
 	return nil
 }

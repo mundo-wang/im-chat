@@ -6,6 +6,7 @@ import (
 	"github.com/mundo-wang/wtool/wresp"
 	"im-chat/code"
 	"im-chat/service"
+	"im-chat/utils"
 	"strconv"
 	"strings"
 )
@@ -74,7 +75,7 @@ func (api *UserApi) UpdateUser(c *gin.Context) (interface{}, error) {
 		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
 		return nil, err
 	}
-	userId := c.GetInt("userId")
+	userId := c.GetInt(utils.ContextUserIDKey)
 	if userId != req.ID {
 		return nil, code.AnotherPerson
 	}
@@ -123,7 +124,7 @@ func (api *UserApi) ChangePassword(c *gin.Context) (interface{}, error) {
 
 func (api *UserApi) AddFriend(c *gin.Context) (interface{}, error) {
 	userCode := c.Query("userCode")
-	userId := c.GetInt("userId")
+	userId := c.GetInt(utils.ContextUserIDKey)
 	err := api.UserService.AddFriend(userCode, userId)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {

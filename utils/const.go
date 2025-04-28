@@ -13,4 +13,8 @@ const (
 
 	QuestionStatusUnpublished = 0
 	QuestionStatusPublished   = 1
+
+	ContextUserIDKey   = "userId"
+	ContextUserNameKey = "userName"
+	ContextPhoneKey    = "phone"
 )

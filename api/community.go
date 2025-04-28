@@ -5,6 +5,7 @@ import (
 	"github.com/mundo-wang/wtool/wlog"
 	"github.com/mundo-wang/wtool/wresp"
 	"im-chat/service"
+	"im-chat/utils"
 	"strconv"
 )
 
@@ -32,7 +33,7 @@ func (api *CommunityApi) LoadByUserId(c *gin.Context) (interface{}, error) {
 }
 
 func (api *CommunityApi) Create(c *gin.Context) (interface{}, error) {
-	userId := c.GetInt("userId") // GetInt方法，如果没有对应key，或者断言int失败，都会返回默认值0
+	userId := c.GetInt(utils.ContextUserIDKey) // GetInt方法，如果没有对应key，或者断言int失败，都会返回默认值0
 	req := &service.CreateCommunityReq{}
 	err := c.ShouldBindJSON(req)
 	if err != nil {
@@ -51,7 +52,7 @@ func (api *CommunityApi) Create(c *gin.Context) (interface{}, error) {
 }
 
 func (api *CommunityApi) JoinGroup(c *gin.Context) (interface{}, error) {
-	userId := c.GetInt("userId")
+	userId := c.GetInt(utils.ContextUserIDKey)
 	groupCode := c.Query("groupCode")
 	err := api.CommunityService.JoinGroup(groupCode, userId)
 	if err != nil {
