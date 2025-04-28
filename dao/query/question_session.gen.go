@@ -29,10 +29,10 @@ func newQuestionSession(db *gorm.DB, opts ...gen.DOOption) questionSession {
 	_questionSession.ALL = field.NewAsterisk(tableName)
 	_questionSession.ID = field.NewInt(tableName, "id")
 	_questionSession.SessionID = field.NewString(tableName, "session_id")
-	_questionSession.UserID = field.NewInt64(tableName, "user_id")
+	_questionSession.UserID = field.NewInt(tableName, "user_id")
 	_questionSession.Username = field.NewString(tableName, "username")
 	_questionSession.AgentCode = field.NewString(tableName, "agent_code")
-	_questionSession.PositionID = field.NewInt64(tableName, "position_id")
+	_questionSession.PositionID = field.NewInt(tableName, "position_id")
 	_questionSession.Status = field.NewInt(tableName, "status")
 	_questionSession.CreatedBy = field.NewString(tableName, "created_by")
 	_questionSession.CreatedAt = field.NewTime(tableName, "created_at")
@@ -48,10 +48,10 @@ type questionSession struct {
 	ALL        field.Asterisk
 	ID         field.Int    // 主键ID
 	SessionID  field.String // Session唯一标识
-	UserID     field.Int64  // 用户ID
+	UserID     field.Int    // 用户ID
 	Username   field.String // 用户名
 	AgentCode  field.String // 智能体编码
-	PositionID field.Int64  // 岗位id
+	PositionID field.Int    // 岗位id
 	Status     field.Int    // 生成题目状态（1=生成中，2=已生成，3=生成失败，4=已提交）
 	CreatedBy  field.String // 创建人
 	CreatedAt  field.Time   // 创建时间
@@ -73,10 +73,10 @@ func (q *questionSession) updateTableName(table string) *questionSession {
 	q.ALL = field.NewAsterisk(table)
 	q.ID = field.NewInt(table, "id")
 	q.SessionID = field.NewString(table, "session_id")
-	q.UserID = field.NewInt64(table, "user_id")
+	q.UserID = field.NewInt(table, "user_id")
 	q.Username = field.NewString(table, "username")
 	q.AgentCode = field.NewString(table, "agent_code")
-	q.PositionID = field.NewInt64(table, "position_id")
+	q.PositionID = field.NewInt(table, "position_id")
 	q.Status = field.NewInt(table, "status")
 	q.CreatedBy = field.NewString(table, "created_by")
 	q.CreatedAt = field.NewTime(table, "created_at")

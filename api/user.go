@@ -75,7 +75,7 @@ func (api *UserApi) UpdateUser(c *gin.Context) (interface{}, error) {
 		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
 		return nil, err
 	}
-	userId := c.GetInt(utils.ContextUserIDKey)
+	userId := utils.GetUserId(c)
 	if userId != req.ID {
 		return nil, code.AnotherPerson
 	}
@@ -124,7 +124,7 @@ func (api *UserApi) ChangePassword(c *gin.Context) (interface{}, error) {
 
 func (api *UserApi) AddFriend(c *gin.Context) (interface{}, error) {
 	userCode := c.Query("userCode")
-	userId := c.GetInt(utils.ContextUserIDKey)
+	userId := utils.GetUserId(c)
 	err := api.UserService.AddFriend(userCode, userId)
 	if err != nil {
 		if !wresp.IsErrorCode(err) {

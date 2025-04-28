@@ -14,10 +14,10 @@ const TableNameQuestionSession = "question_session"
 type QuestionSession struct {
 	ID         int       `gorm:"column:id;primaryKey;autoIncrement:true;comment:主键ID" json:"id"`                // 主键ID
 	SessionID  string    `gorm:"column:session_id;not null;comment:Session唯一标识" json:"session_id"`              // Session唯一标识
-	UserID     int64     `gorm:"column:user_id;not null;comment:用户ID" json:"user_id"`                           // 用户ID
+	UserID     int       `gorm:"column:user_id;not null;comment:用户ID" json:"user_id"`                           // 用户ID
 	Username   string    `gorm:"column:username;not null;comment:用户名" json:"username"`                          // 用户名
 	AgentCode  string    `gorm:"column:agent_code;not null;comment:智能体编码" json:"agent_code"`                    // 智能体编码
-	PositionID int64     `gorm:"column:position_id;not null;comment:岗位id" json:"position_id"`                   // 岗位id
+	PositionID int       `gorm:"column:position_id;not null;comment:岗位id" json:"position_id"`                   // 岗位id
 	Status     int       `gorm:"column:status;not null;comment:生成题目状态（1=生成中，2=已生成，3=生成失败，4=已提交）" json:"status"` // 生成题目状态（1=生成中，2=已生成，3=生成失败，4=已提交）
 	CreatedBy  string    `gorm:"column:created_by;not null;comment:创建人" json:"created_by"`                      // 创建人
 	CreatedAt  time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`    // 创建时间

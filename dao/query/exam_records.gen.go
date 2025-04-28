@@ -28,8 +28,8 @@ func newExamRecords(db *gorm.DB, opts ...gen.DOOption) examRecords {
 	tableName := _examRecords.examRecordsDo.TableName()
 	_examRecords.ALL = field.NewAsterisk(tableName)
 	_examRecords.ID = field.NewInt(tableName, "id")
-	_examRecords.UserID = field.NewInt64(tableName, "user_id")
-	_examRecords.PositionID = field.NewInt64(tableName, "position_id")
+	_examRecords.UserID = field.NewInt(tableName, "user_id")
+	_examRecords.PositionID = field.NewInt(tableName, "position_id")
 	_examRecords.Score = field.NewInt(tableName, "score")
 	_examRecords.Remark = field.NewString(tableName, "remark")
 	_examRecords.CreatedAt = field.NewTime(tableName, "created_at")
@@ -45,8 +45,8 @@ type examRecords struct {
 
 	ALL        field.Asterisk
 	ID         field.Int    // 考试记录ID
-	UserID     field.Int64  // 用户ID
-	PositionID field.Int64  // 岗位id
+	UserID     field.Int    // 用户ID
+	PositionID field.Int    // 岗位id
 	Score      field.Int    // 总得分
 	Remark     field.String // 考试评语
 	CreatedAt  field.Time   // 提交时间
@@ -68,8 +68,8 @@ func (e examRecords) As(alias string) *examRecords {
 func (e *examRecords) updateTableName(table string) *examRecords {
 	e.ALL = field.NewAsterisk(table)
 	e.ID = field.NewInt(table, "id")
-	e.UserID = field.NewInt64(table, "user_id")
-	e.PositionID = field.NewInt64(table, "position_id")
+	e.UserID = field.NewInt(table, "user_id")
+	e.PositionID = field.NewInt(table, "position_id")
 	e.Score = field.NewInt(table, "score")
 	e.Remark = field.NewString(table, "remark")
 	e.CreatedAt = field.NewTime(table, "created_at")

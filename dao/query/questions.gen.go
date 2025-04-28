@@ -33,7 +33,7 @@ func newQuestions(db *gorm.DB, opts ...gen.DOOption) questions {
 	_questions.Answer = field.NewString(tableName, "answer")
 	_questions.Status = field.NewInt(tableName, "status")
 	_questions.AgentCode = field.NewString(tableName, "agent_code")
-	_questions.PositionID = field.NewInt64(tableName, "position_id")
+	_questions.PositionID = field.NewInt(tableName, "position_id")
 	_questions.SessionRefID = field.NewString(tableName, "session_ref_id")
 	_questions.CreatedBy = field.NewString(tableName, "created_by")
 	_questions.UpdatedBy = field.NewString(tableName, "updated_by")
@@ -56,7 +56,7 @@ type questions struct {
 	Answer       field.String // 正确答案
 	Status       field.Int    // 题目状态（0=未发布，1=已发布）
 	AgentCode    field.String // 智能体编码
-	PositionID   field.Int64  // 岗位名称
+	PositionID   field.Int    // 岗位名称
 	SessionRefID field.String // 关联的生成题目批次ID
 	CreatedBy    field.String // 创建人
 	UpdatedBy    field.String // 修改人
@@ -85,7 +85,7 @@ func (q *questions) updateTableName(table string) *questions {
 	q.Answer = field.NewString(table, "answer")
 	q.Status = field.NewInt(table, "status")
 	q.AgentCode = field.NewString(table, "agent_code")
-	q.PositionID = field.NewInt64(table, "position_id")
+	q.PositionID = field.NewInt(table, "position_id")
 	q.SessionRefID = field.NewString(table, "session_ref_id")
 	q.CreatedBy = field.NewString(table, "created_by")
 	q.UpdatedBy = field.NewString(table, "updated_by")

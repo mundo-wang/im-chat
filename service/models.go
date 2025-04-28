@@ -67,7 +67,7 @@ type CreateCommunityReq struct {
 }
 
 type GenerateQuestionsReq struct {
-	PositionId int64  `form:"positionId"` // 岗位id
+	PositionId int    `form:"positionId"` // 岗位id
 	AgentCode  string `form:"agentCode"`  // 智能体id
 	Type       int    `form:"type"`       // 题型（0=选择题，1=判断题）
 	Number     int    `form:"number"`     // 题目数量

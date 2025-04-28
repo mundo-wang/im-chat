@@ -18,7 +18,7 @@ type Questions struct {
 	Answer       string    `gorm:"column:answer;not null;comment:正确答案" json:"answer"`                          // 正确答案
 	Status       int       `gorm:"column:status;not null;comment:题目状态（0=未发布，1=已发布）" json:"status"`             // 题目状态（0=未发布，1=已发布）
 	AgentCode    string    `gorm:"column:agent_code;not null;comment:智能体编码" json:"agent_code"`                 // 智能体编码
-	PositionID   int64     `gorm:"column:position_id;not null;comment:岗位名称" json:"position_id"`                // 岗位名称
+	PositionID   int       `gorm:"column:position_id;not null;comment:岗位名称" json:"position_id"`                // 岗位名称
 	SessionRefID string    `gorm:"column:session_ref_id;not null;comment:关联的生成题目批次ID" json:"session_ref_id"`   // 关联的生成题目批次ID
 	CreatedBy    string    `gorm:"column:created_by;not null;comment:创建人" json:"created_by"`                   // 创建人
 	UpdatedBy    string    `gorm:"column:updated_by;comment:修改人" json:"updated_by"`                            // 修改人

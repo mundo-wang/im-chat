@@ -64,7 +64,7 @@ CREATE TABLE `questions` (
   `answer` VARCHAR(100) NOT NULL COMMENT '正确答案',
   `status` INT NOT NULL DEFAULT 0 COMMENT '题目状态（0=未发布，1=已发布）',
   `agent_code` VARCHAR(100) NOT NULL COMMENT '智能体编码',
-  `position_id` BIGINT NOT NULL COMMENT '岗位名称',
+  `position_id` INT NOT NULL COMMENT '岗位名称',
   `session_ref_id` VARCHAR(100) NOT NULL COMMENT '关联的生成题目批次ID',
   `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
   `updated_by` VARCHAR(100) DEFAULT NULL COMMENT '修改人',
@@ -83,10 +83,10 @@ CREATE TABLE `question_options` (
 CREATE TABLE `question_session` (
   `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID',
   `session_id` VARCHAR(100) NOT NULL COMMENT 'Session唯一标识',
-  `user_id` BIGINT NOT NULL COMMENT '用户ID',
+  `user_id` INT NOT NULL COMMENT '用户ID',
   `username` VARCHAR(100) NOT NULL COMMENT '用户名',
   `agent_code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '智能体编码',
-  `position_id` BIGINT NOT NULL COMMENT '岗位id',
+  `position_id` INT NOT NULL COMMENT '岗位id',
   `status` INT NOT NULL DEFAULT 0 COMMENT '生成题目状态（1=生成中，2=已生成，3=生成失败，4=已提交）',
   `created_by` varchar(100) NOT NULL COMMENT '创建人',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
@@ -94,8 +94,8 @@ CREATE TABLE `question_session` (
 
 CREATE TABLE `exam_records` (
   `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '考试记录ID',
-  `user_id` BIGINT NOT NULL COMMENT '用户ID',
-  `position_id` BIGINT NOT NULL COMMENT '岗位id',
+  `user_id` INT NOT NULL COMMENT '用户ID',
+  `position_id` INT NOT NULL COMMENT '岗位id',
   `score` INT DEFAULT 0 COMMENT '总得分',
   `remark` VARCHAR(500) COMMENT '考试评语',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
