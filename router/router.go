@@ -29,7 +29,7 @@ func SetRouter(s *wresp.Server) {
 		user.POST("/create", s.WrapHandler(api.GetUserApi().CreateUser))
 		user.POST("/login", s.WrapHandler(api.GetUserApi().Login))
 		user.Use(s.WrapMiddleware(api.CheckAuthorization)) // 上面两个用户接口不走鉴权中间件
-		user.POST("/updateUser", s.WrapHandler(api.GetUserApi().UpdateUser))
+		user.POST("/update", s.WrapHandler(api.GetUserApi().UpdateUser))
 		user.GET("/searchFriends", s.WrapHandler(api.GetUserApi().SearchFriends))
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
 		user.GET("/addFriend", s.WrapHandler(api.GetUserApi().AddFriend))
@@ -48,5 +48,11 @@ func SetRouter(s *wresp.Server) {
 	{
 		attach.POST("/upload", s.WrapHandler(api.Upload))
 		attach.GET("/download", s.WrapFileDownload(api.Download, false)) // false代表不触发下载
+	}
+
+	// 试题有关接口
+	question := r.Group("/question", s.WrapMiddleware(api.CheckAuthorization))
+	{
+		question.GET("/generate", s.WrapStreamHandler(api.GetQuestionSessionApi().GenerateQuestions))
 	}
 }

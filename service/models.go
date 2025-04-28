@@ -65,3 +65,22 @@ type CreateCommunityReq struct {
 	Type        int    `json:"type"`
 	Description string `json:"description"`
 }
+
+type GenerateQuestionsReq struct {
+	PositionId int64  `form:"positionId"` // 岗位id
+	AgentCode  string `form:"agentCode"`  // 智能体id
+	Type       int    `form:"type"`       // 题型（0=选择题，1=判断题）
+	Number     int    `form:"number"`     // 题目数量
+}
+
+type GenerateQuestionsResp struct {
+	ID      int       `json:"id"`      // 题目id
+	Title   string    `json:"title"`   // 题干内容
+	Answer  string    `json:"answer"`  // 正确答案（如：A、B、C、D）
+	Options []Options `json:"options"` // 选项列表（选择题时必填，判断题可为空）
+}
+
+type Options struct {
+	OptionKey  string `json:"optionKey"`  // 选项标识（如：A、B、C、D）
+	OptionText string `json:"optionText"` // 选项内容
+}
