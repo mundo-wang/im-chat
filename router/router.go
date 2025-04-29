@@ -33,7 +33,6 @@ func SetRouter(s *wresp.Server) {
 		user.GET("/searchFriends", s.WrapHandler(api.GetUserApi().SearchFriends))
 		user.POST("/changePassword", s.WrapHandler(api.GetUserApi().ChangePassword))
 		user.GET("/addFriend", s.WrapHandler(api.GetUserApi().AddFriend))
-		user.GET("/tempApi", s.WrapHandler(api.GetUserApi().TempApi))
 	}
 
 	// 与群组有关的接口

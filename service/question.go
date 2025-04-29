@@ -1,9 +1,9 @@
 package service
 
 import (
-	"context"
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
+	"gorm.io/gen"
 	"im-chat/utils"
 	"math"
 )
@@ -12,19 +12,19 @@ type QuestionService struct {
 }
 
 func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.PageResult[GetQuestionPageResp], error) {
-	questionsCond := questionsQ.WithContext(context.Background())
-	questionsCond = questionsCond.Where(questionsQ.Status.Eq(utils.QuestionStatusPublished))
+	conds := []gen.Condition{}
+	conds = append(conds, questionsQ.Status.Eq(utils.QuestionStatusPublished))
 	if req.PositionId != 0 {
-		questionsCond = questionsCond.Where(questionsQ.PositionID.Eq(req.PositionId))
+		conds = append(conds, questionsQ.PositionID.Eq(req.PositionId))
 	}
-	if req.Type != 0 {
-		questionsCond = questionsCond.Where(questionsQ.Type.Eq(req.Type))
+	if req.Type != -1 {
+		conds = append(conds, questionsQ.Type.Eq(req.Type))
 	}
 	if !req.OperationTimeStart.IsZero() && !req.OperationTimeEnd.IsZero() {
-		questionsCond = questionsCond.Where(questionsQ.UpdatedAt.Between(req.OperationTimeStart, req.OperationTimeEnd))
+		conds = append(conds, questionsQ.UpdatedAt.Between(req.OperationTimeStart, req.OperationTimeEnd))
 	}
 	offset := (req.Page - 1) * req.Size
-	questionPage, _, err := questionsCond.FindByPage(offset, req.Size)
+	questionPage, _, err := questionsQ.Where(conds...).FindByPage(offset, req.Size)
 	if err != nil {
 		wlog.Error("call questionsCond.FindByPage failed").Err(err).Field("req", req).Log()
 		return nil, err
@@ -51,7 +51,7 @@ func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.Pag
 		resp.Options = optionList
 		respList = append(respList, resp)
 	}
-	count, err := questionsCond.Count()
+	count, err := questionsQ.Where(conds...).Count()
 	if err != nil {
 		wlog.Error("call questionsQB.Count failed").Log()
 		return nil, err
