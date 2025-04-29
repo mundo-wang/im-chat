@@ -4,10 +4,13 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
 	"gorm.io/gorm"
+	"im-chat/code"
 	"im-chat/dao/model"
 	"im-chat/utils"
+	"time"
 )
 
 type QuestionSessionService struct {
@@ -86,4 +89,54 @@ func (q *QuestionSessionService) CheckUnpublishedSession(c *gin.Context) string 
 	} else {
 		return questionSession.SessionID
 	}
+}
+
+func (q *QuestionSessionService) GetSessionQuestions(sessionId string) ([]GetSessionQuestionsResp, error) {
+	questionSession, err := questionSessionQ.Where(questionSessionQ.SessionID.Eq(sessionId)).First()
+	if err != nil {
+		wlog.Error("call questionSessionQ.First failed").Err(err).Field("sessionId", sessionId).Log()
+		return nil, err
+	}
+	if questionSession.Status == utils.GenerateStatusGenerating {
+		createdAt := questionSession.CreatedAt
+		if time.Now().Sub(createdAt) > 10*time.Minute {
+			questionSession.Status = utils.GenerateStatusFailed
+			_, err = questionSessionQ.Updates(questionSession)
+			if err != nil {
+				wlog.Error("call questionSessionQ.Updates failed").Err(err).Field("questionSession", questionSession).Log()
+				return nil, err
+			}
+		}
+	}
+	if questionSession.Status == utils.GenerateStatusFailed {
+		return nil, code.QuestionGenerating
+	}
+	resp := make([]GetSessionQuestionsResp, 0)
+	questionList, err := questionsQ.Where(questionsQ.SessionRefID.Eq(sessionId), questionsQ.Status.Eq(utils.QuestionStatusUnpublished)).Find()
+	if err != nil {
+		wlog.Error("call questionsQ.Find failed").Err(err).Field("sessionId", sessionId).Log()
+		return nil, err
+	}
+	for _, question := range questionList {
+		questionResp := GetSessionQuestionsResp{}
+		err = copier.Copy(&questionResp, question)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Log()
+			return nil, err
+		}
+		optionList, err := questionOptionsQ.Where(questionOptionsQ.QuestionID.Eq(question.ID)).Find()
+		if err != nil {
+			wlog.Error("call questionOptionsQ.Find failed").Err(err).Field("questionId", question.ID).Log()
+			return nil, err
+		}
+		optionResp := make([]Options, 0)
+		err = copier.Copy(&optionResp, optionList)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("optionList", optionList).Log()
+			return nil, err
+		}
+		questionResp.Options = optionResp
+		resp = append(resp, questionResp)
+	}
+	return resp, nil
 }

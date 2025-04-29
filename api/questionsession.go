@@ -40,3 +40,13 @@ func (api *QuestionSessionApi) CheckUnpublishedSession(c *gin.Context) (interfac
 		return nil, nil
 	}
 }
+
+func (api *QuestionSessionApi) GetSessionQuestions(c *gin.Context) (interface{}, error) {
+	sessionId := c.Query("sessionId")
+	resp, err := api.QuestionSessionService.GetSessionQuestions(sessionId)
+	if err != nil {
+		wlog.Error("call api.QuestionSessionService.GetSessionQuestions failed").Err(err).Field("sessionId", sessionId).Log()
+		return nil, err
+	}
+	return resp, nil
+}

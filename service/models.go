@@ -84,3 +84,13 @@ type Options struct {
 	OptionKey  string `json:"optionKey"`  // 选项标识（如：A、B、C、D）
 	OptionText string `json:"optionText"` // 选项内容
 }
+
+type GetSessionQuestionsResp struct {
+	Id         int       `json:"id"`
+	Title      string    `json:"title"`
+	Type       int       `json:"type"`
+	PositionId int       `json:"positionId"`
+	AgentCode  string    `json:"agentCode"`
+	Answer     string    `json:"answer"`
+	Options    []Options `json:"options"`
+}
