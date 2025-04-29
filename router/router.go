@@ -54,5 +54,6 @@ func SetRouter(s *wresp.Server) {
 	question := r.Group("/question", s.WrapMiddleware(api.CheckAuthorization))
 	{
 		question.GET("/generate", s.WrapStreamHandler(api.GetQuestionSessionApi().GenerateQuestions))
+		question.GET("/checkUnpublishedSession", s.WrapHandler(api.GetQuestionSessionApi().CheckUnpublishedSession))
 	}
 }

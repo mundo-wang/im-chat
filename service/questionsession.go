@@ -1,9 +1,11 @@
 package service
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/mundo-wang/wtool/wlog"
+	"gorm.io/gorm"
 	"im-chat/dao/model"
 	"im-chat/utils"
 )
@@ -64,7 +66,24 @@ func (q *QuestionSessionService) GenerateQuestions(c *gin.Context, req *Generate
 			{OptionKey: "D", OptionText: "测试选项D"},
 		},
 	}
-	c.SSEvent("question", resp)
+	c.SSEvent("resp", resp)
 	c.Writer.Flush()
+	_, err = questionSessionQ.Where(questionSessionQ.ID.Eq(questionSession.ID)).
+		UpdateColumn(questionSessionQ.Status, utils.GenerateStatusGenerated)
+	if err != nil {
+		wlog.Error("call questionSessionQ.UpdateColumn failed").Err(err).Field("sessionId", sessionId).Log()
+		return err
+	}
 	return nil
+}
+
+func (q *QuestionSessionService) CheckUnpublishedSession(c *gin.Context) string {
+	questionSession, err := questionSessionQ.Where(
+		questionSessionQ.Status.In(utils.GenerateStatusGenerating, utils.GenerateStatusGenerated),
+		questionSessionQ.CreatedBy.Eq(utils.GetUserName(c))).Order(questionSessionQ.CreatedAt.Desc()).First()
+	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
+		return ""
+	} else {
+		return questionSession.SessionID
+	}
 }

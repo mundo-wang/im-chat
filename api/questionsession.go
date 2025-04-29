@@ -31,3 +31,12 @@ func (api *QuestionSessionApi) GenerateQuestions(c *gin.Context) error {
 	}
 	return nil
 }
+
+func (api *QuestionSessionApi) CheckUnpublishedSession(c *gin.Context) (interface{}, error) {
+	sessionId := api.QuestionSessionService.CheckUnpublishedSession(c)
+	if sessionId != "" {
+		return sessionId, nil
+	} else {
+		return nil, nil
+	}
+}
