@@ -94,3 +94,23 @@ type GetSessionQuestionsResp struct {
 	Answer     string    `json:"answer"`
 	Options    []Options `json:"options"`
 }
+
+type GetQuestionsPageReq struct {
+	PositionId         int       `json:"positionId"`
+	Type               int       `json:"type"`
+	OperationTimeStart time.Time `json:"operationTimeStart"`
+	OperationTimeEnd   time.Time `json:"operationTimeEnd"`
+	Page               int       `json:"page"`
+	Size               int       `json:"size"`
+}
+
+type GetQuestionPageResp struct {
+	Id         int       `json:"id"`
+	Title      string    `json:"title"`
+	Answer     string    `json:"answer"`
+	PositionId int       `json:"positionId"`
+	Position   string    `json:"position"`
+	Type       int       `json:"type"`
+	AgentCode  string    `json:"agentCode"`
+	Options    []Options `json:"options"`
+}

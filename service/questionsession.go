@@ -111,15 +111,15 @@ func (q *QuestionSessionService) GetSessionQuestions(sessionId string) ([]GetSes
 	if questionSession.Status == utils.GenerateStatusFailed {
 		return nil, code.QuestionGenerating
 	}
-	resp := make([]GetSessionQuestionsResp, 0)
+	respList := make([]GetSessionQuestionsResp, 0)
 	questionList, err := questionsQ.Where(questionsQ.SessionRefID.Eq(sessionId), questionsQ.Status.Eq(utils.QuestionStatusUnpublished)).Find()
 	if err != nil {
 		wlog.Error("call questionsQ.Find failed").Err(err).Field("sessionId", sessionId).Log()
 		return nil, err
 	}
 	for _, question := range questionList {
-		questionResp := GetSessionQuestionsResp{}
-		err = copier.Copy(&questionResp, question)
+		resp := GetSessionQuestionsResp{}
+		err = copier.Copy(&resp, question)
 		if err != nil {
 			wlog.Error("call copier.Copy failed").Err(err).Log()
 			return nil, err
@@ -135,8 +135,8 @@ func (q *QuestionSessionService) GetSessionQuestions(sessionId string) ([]GetSes
 			wlog.Error("call copier.Copy failed").Err(err).Field("optionList", optionList).Log()
 			return nil, err
 		}
-		questionResp.Options = optionResp
-		resp = append(resp, questionResp)
+		resp.Options = optionResp
+		respList = append(respList, resp)
 	}
-	return resp, nil
+	return respList, nil
 }

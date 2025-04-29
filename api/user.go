@@ -134,3 +134,10 @@ func (api *UserApi) AddFriend(c *gin.Context) (interface{}, error) {
 	}
 	return nil, nil
 }
+
+func (api *UserApi) TempApi(c *gin.Context) (interface{}, error) {
+	name := c.Query("name")
+	email := c.Query("email")
+	users, _ := api.UserService.TempApi(name, email)
+	return users, nil
+}

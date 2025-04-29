@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
+	"gorm.io/gen"
 	"gorm.io/gorm"
 	"im-chat/code"
 	"im-chat/dao/model"
@@ -183,4 +184,16 @@ func (u *UserService) AddFriend(userCode string, userId int) error {
 		return err
 	}
 	return nil
+}
+
+func (u *UserService) TempApi(name, email string) ([]*model.Users, error) {
+	conds := []gen.Condition{}
+	if name != "" {
+		conds = append(conds, usersQ.Name.Eq(name))
+	}
+	if email != "" {
+		conds = append(conds, usersQ.Email.Eq(email))
+	}
+	users, _ := usersQ.Where(conds...).Find()
+	return users, nil
 }

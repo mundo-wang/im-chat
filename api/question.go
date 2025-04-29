@@ -1,0 +1,30 @@
+package api
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/mundo-wang/wtool/wlog"
+	"im-chat/service"
+)
+
+type QuestionApi struct {
+	service.QuestionService
+}
+
+func GetQuestionApi() *QuestionApi {
+	return &QuestionApi{}
+}
+
+func (api *QuestionApi) GetQuestionsPage(c *gin.Context) (interface{}, error) {
+	req := &service.GetQuestionsPageReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	page, err := api.QuestionService.GetQuestionsPage(req)
+	if err != nil {
+		wlog.Error("call api.QuestionService.GetQuestionsPage failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return page, nil
+}
