@@ -139,3 +139,15 @@ type UpdateQuestionReq struct {
 	Options    []Options `json:"options"`
 	PositionId int       `json:"positionId"`
 }
+
+type FetchRandomQuestionsReq struct {
+	PositionId int `form:"positionId"`
+	Count      int `form:"count"`
+}
+
+type FetchRandomQuestionsResp struct {
+	ID      int       `json:"id"`
+	Title   string    `json:"title"`
+	Type    int       `json:"type"`
+	Options []Options `json:"options"`
+}

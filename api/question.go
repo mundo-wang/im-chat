@@ -74,3 +74,18 @@ func (api *QuestionApi) DeleteQuestion(c *gin.Context) (interface{}, error) {
 	}
 	return nil, nil
 }
+
+func (api *QuestionApi) FetchRandomQuestions(c *gin.Context) (interface{}, error) {
+	req := &service.FetchRandomQuestionsReq{}
+	err := c.ShouldBindQuery(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindQuery failed").Err(err).Log()
+		return nil, err
+	}
+	resp, err := api.QuestionService.FetchRandomQuestions(req.PositionId, req.Count)
+	if err != nil {
+		wlog.Error("call api.QuestionService.FetchRandomQuestions failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return resp, nil
+}

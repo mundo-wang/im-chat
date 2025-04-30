@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
 	"gorm.io/gen"
+	"gorm.io/gen/field"
 	"im-chat/dao/model"
 	"im-chat/dao/query"
 	"im-chat/utils"
@@ -151,4 +152,36 @@ func (q *QuestionService) DeleteQuestion(id int) error {
 		return err
 	}
 	return nil
+}
+
+func (q *QuestionService) FetchRandomQuestions(positionId, count int) ([]FetchRandomQuestionsResp, error) {
+	questionList, err := questionsQ.Where(questionsQ.PositionID.Eq(positionId)).Order(field.Func.Rand()).Limit(count).Find()
+	if err != nil {
+		wlog.Error("call questionsQ.Find failed").Err(err).Field("positionId", positionId).Log()
+		return nil, err
+	}
+	respList := make([]FetchRandomQuestionsResp, 0)
+
+	for _, question := range questionList {
+		resp := FetchRandomQuestionsResp{}
+		err = copier.Copy(&resp, question)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("positionId", positionId).Log()
+			return nil, err
+		}
+		options := make([]Options, 0)
+		optionList, err := questionOptionsQ.Where(questionOptionsQ.QuestionID.Eq(question.ID)).Find()
+		if err != nil {
+			wlog.Error("call questionOptionsQ.Find failed").Err(err).Field("positionId", positionId).Log()
+			return nil, err
+		}
+		err = copier.Copy(&options, optionList)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("optionList", optionList).Log()
+			return nil, err
+		}
+		resp.Options = options
+		respList = append(respList, resp)
+	}
+	return respList, nil
 }
