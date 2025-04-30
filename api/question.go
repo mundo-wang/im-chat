@@ -44,3 +44,33 @@ func (api *QuestionApi) GetQuestionInfo(c *gin.Context) (interface{}, error) {
 	}
 	return resp, nil
 }
+
+func (api *QuestionApi) UpdateQuestion(c *gin.Context) (interface{}, error) {
+	req := &service.UpdateQuestionReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	err = api.QuestionService.UpdateQuestion(req)
+	if err != nil {
+		wlog.Error("call api.QuestionService.UpdateQuestion failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return nil, nil
+}
+
+func (api *QuestionApi) DeleteQuestion(c *gin.Context) (interface{}, error) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		wlog.Error("call strconv.Atoi failed").Err(err).Field("idStr", idStr).Log()
+		return nil, err
+	}
+	err = api.QuestionService.DeleteQuestion(id)
+	if err != nil {
+		wlog.Error("call api.QuestionService.DeleteQuestion failed").Err(err).Field("id", id).Log()
+		return nil, err
+	}
+	return nil, nil
+}

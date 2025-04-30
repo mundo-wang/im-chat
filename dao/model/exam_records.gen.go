@@ -6,19 +6,21 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 const TableNameExamRecords = "exam_records"
 
 // ExamRecords mapped from table <exam_records>
 type ExamRecords struct {
-	ID         int       `gorm:"column:id;primaryKey;autoIncrement:true;comment:考试记录ID" json:"id"`           // 考试记录ID
-	UserID     int       `gorm:"column:user_id;not null;comment:用户ID" json:"user_id"`                        // 用户ID
-	PositionID int       `gorm:"column:position_id;not null;comment:岗位id" json:"position_id"`                // 岗位id
-	Score      int       `gorm:"column:score;comment:总得分" json:"score"`                                      // 总得分
-	Remark     string    `gorm:"column:remark;comment:考试评语" json:"remark"`                                   // 考试评语
-	CreatedAt  time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:提交时间" json:"created_at"` // 提交时间
-	IsDeleted  int       `gorm:"column:is_deleted;not null;comment:逻辑删除标记（0=未删除，1=已删除）" json:"is_deleted"`   // 逻辑删除标记（0=未删除，1=已删除）
+	ID         int            `gorm:"column:id;primaryKey;autoIncrement:true;comment:考试记录ID" json:"id"`           // 考试记录ID
+	UserID     int            `gorm:"column:user_id;not null;comment:用户ID" json:"user_id"`                        // 用户ID
+	PositionID int            `gorm:"column:position_id;not null;comment:岗位id" json:"position_id"`                // 岗位id
+	Score      int            `gorm:"column:score;comment:总得分" json:"score"`                                      // 总得分
+	Remark     string         `gorm:"column:remark;comment:考试评语" json:"remark"`                                   // 考试评语
+	CreatedAt  time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:提交时间" json:"created_at"` // 提交时间
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;not null;comment:逻辑删除标记（0=未删除，1=已删除）" json:"deleted_at"`   // 逻辑删除标记（0=未删除，1=已删除）
 }
 
 // TableName ExamRecords's table name

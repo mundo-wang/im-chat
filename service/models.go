@@ -130,3 +130,12 @@ type GetQuestionInfoResp struct {
 	CreatedAt  time.Time `json:"createdAt"`
 	UpdatedAt  time.Time `json:"updatedAt"`
 }
+
+type UpdateQuestionReq struct {
+	ID         int       `json:"id"`
+	Title      string    `json:"title"`
+	Type       int       `json:"type"`
+	Answer     string    `json:"answer"`
+	Options    []Options `json:"options"`
+	PositionId int       `json:"positionId"`
+}

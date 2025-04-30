@@ -6,25 +6,27 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 const TableNameQuestions = "questions"
 
 // Questions mapped from table <questions>
 type Questions struct {
-	ID           int       `gorm:"column:id;primaryKey;autoIncrement:true;comment:主键ID" json:"id"`             // 主键ID
-	Title        string    `gorm:"column:title;not null;comment:题目内容" json:"title"`                            // 题目内容
-	Type         int       `gorm:"column:type;not null;comment:题型（0=选择题，1=判断题）" json:"type"`                   // 题型（0=选择题，1=判断题）
-	Answer       string    `gorm:"column:answer;not null;comment:正确答案" json:"answer"`                          // 正确答案
-	Status       int       `gorm:"column:status;not null;comment:题目状态（0=未发布，1=已发布）" json:"status"`             // 题目状态（0=未发布，1=已发布）
-	AgentCode    string    `gorm:"column:agent_code;not null;comment:智能体编码" json:"agent_code"`                 // 智能体编码
-	PositionID   int       `gorm:"column:position_id;not null;comment:岗位名称" json:"position_id"`                // 岗位名称
-	SessionRefID string    `gorm:"column:session_ref_id;not null;comment:关联的生成题目批次ID" json:"session_ref_id"`   // 关联的生成题目批次ID
-	CreatedBy    string    `gorm:"column:created_by;not null;comment:创建人" json:"created_by"`                   // 创建人
-	UpdatedBy    string    `gorm:"column:updated_by;comment:修改人" json:"updated_by"`                            // 修改人
-	CreatedAt    time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt    time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"` // 更新时间
-	IsDeleted    int       `gorm:"column:is_deleted;not null;comment:逻辑删除标记（0=未删除，1=已删除）" json:"is_deleted"`   // 逻辑删除标记（0=未删除，1=已删除）
+	ID           int            `gorm:"column:id;primaryKey;autoIncrement:true;comment:主键ID" json:"id"`             // 主键ID
+	Title        string         `gorm:"column:title;not null;comment:题目内容" json:"title"`                            // 题目内容
+	Type         int            `gorm:"column:type;not null;comment:题型（0=选择题，1=判断题）" json:"type"`                   // 题型（0=选择题，1=判断题）
+	Answer       string         `gorm:"column:answer;not null;comment:正确答案" json:"answer"`                          // 正确答案
+	Status       int            `gorm:"column:status;not null;comment:题目状态（0=未发布，1=已发布）" json:"status"`             // 题目状态（0=未发布，1=已发布）
+	AgentCode    string         `gorm:"column:agent_code;not null;comment:智能体编码" json:"agent_code"`                 // 智能体编码
+	PositionID   int            `gorm:"column:position_id;not null;comment:岗位名称" json:"position_id"`                // 岗位名称
+	SessionRefID string         `gorm:"column:session_ref_id;not null;comment:关联的生成题目批次ID" json:"session_ref_id"`   // 关联的生成题目批次ID
+	CreatedBy    string         `gorm:"column:created_by;not null;comment:创建人" json:"created_by"`                   // 创建人
+	UpdatedBy    string         `gorm:"column:updated_by;comment:修改人" json:"updated_by"`                            // 修改人
+	CreatedAt    time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt    time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"` // 更新时间
+	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;not null;comment:逻辑删除标记" json:"deleted_at"`                // 逻辑删除标记
 }
 
 // TableName Questions's table name

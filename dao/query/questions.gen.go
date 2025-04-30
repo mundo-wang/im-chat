@@ -39,7 +39,7 @@ func newQuestions(db *gorm.DB, opts ...gen.DOOption) questions {
 	_questions.UpdatedBy = field.NewString(tableName, "updated_by")
 	_questions.CreatedAt = field.NewTime(tableName, "created_at")
 	_questions.UpdatedAt = field.NewTime(tableName, "updated_at")
-	_questions.IsDeleted = field.NewInt(tableName, "is_deleted")
+	_questions.DeletedAt = field.NewField(tableName, "deleted_at")
 
 	_questions.fillFieldMap()
 
@@ -62,7 +62,7 @@ type questions struct {
 	UpdatedBy    field.String // 修改人
 	CreatedAt    field.Time   // 创建时间
 	UpdatedAt    field.Time   // 更新时间
-	IsDeleted    field.Int    // 逻辑删除标记（0=未删除，1=已删除）
+	DeletedAt    field.Field  // 逻辑删除标记
 
 	fieldMap map[string]field.Expr
 }
@@ -91,7 +91,7 @@ func (q *questions) updateTableName(table string) *questions {
 	q.UpdatedBy = field.NewString(table, "updated_by")
 	q.CreatedAt = field.NewTime(table, "created_at")
 	q.UpdatedAt = field.NewTime(table, "updated_at")
-	q.IsDeleted = field.NewInt(table, "is_deleted")
+	q.DeletedAt = field.NewField(table, "deleted_at")
 
 	q.fillFieldMap()
 
@@ -121,7 +121,7 @@ func (q *questions) fillFieldMap() {
 	q.fieldMap["updated_by"] = q.UpdatedBy
 	q.fieldMap["created_at"] = q.CreatedAt
 	q.fieldMap["updated_at"] = q.UpdatedAt
-	q.fieldMap["is_deleted"] = q.IsDeleted
+	q.fieldMap["deleted_at"] = q.DeletedAt
 }
 
 func (q questions) clone(db *gorm.DB) questions {

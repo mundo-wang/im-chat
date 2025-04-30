@@ -33,7 +33,7 @@ func newExamRecords(db *gorm.DB, opts ...gen.DOOption) examRecords {
 	_examRecords.Score = field.NewInt(tableName, "score")
 	_examRecords.Remark = field.NewString(tableName, "remark")
 	_examRecords.CreatedAt = field.NewTime(tableName, "created_at")
-	_examRecords.IsDeleted = field.NewInt(tableName, "is_deleted")
+	_examRecords.DeletedAt = field.NewField(tableName, "deleted_at")
 
 	_examRecords.fillFieldMap()
 
@@ -50,7 +50,7 @@ type examRecords struct {
 	Score      field.Int    // 总得分
 	Remark     field.String // 考试评语
 	CreatedAt  field.Time   // 提交时间
-	IsDeleted  field.Int    // 逻辑删除标记（0=未删除，1=已删除）
+	DeletedAt  field.Field  // 逻辑删除标记（0=未删除，1=已删除）
 
 	fieldMap map[string]field.Expr
 }
@@ -73,7 +73,7 @@ func (e *examRecords) updateTableName(table string) *examRecords {
 	e.Score = field.NewInt(table, "score")
 	e.Remark = field.NewString(table, "remark")
 	e.CreatedAt = field.NewTime(table, "created_at")
-	e.IsDeleted = field.NewInt(table, "is_deleted")
+	e.DeletedAt = field.NewField(table, "deleted_at")
 
 	e.fillFieldMap()
 
@@ -97,7 +97,7 @@ func (e *examRecords) fillFieldMap() {
 	e.fieldMap["score"] = e.Score
 	e.fieldMap["remark"] = e.Remark
 	e.fieldMap["created_at"] = e.CreatedAt
-	e.fieldMap["is_deleted"] = e.IsDeleted
+	e.fieldMap["deleted_at"] = e.DeletedAt
 }
 
 func (e examRecords) clone(db *gorm.DB) examRecords {

@@ -4,6 +4,8 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
 	"gorm.io/gen"
+	"im-chat/dao/model"
+	"im-chat/dao/query"
 	"im-chat/utils"
 	"math"
 )
@@ -94,4 +96,59 @@ func (q *QuestionService) GetQuestionInfo(id int) (*GetQuestionInfoResp, error) 
 		resp.Options = options
 	}
 	return resp, nil
+}
+
+func (q *QuestionService) UpdateQuestion(req *UpdateQuestionReq) error {
+	tx := query.Q.Begin()
+	questionsTX := tx.Questions
+	questionOptionsTX := tx.QuestionOptions
+	question, err := questionsTX.Where(questionsQ.ID.Eq(req.ID)).First()
+	if err != nil {
+		wlog.Error("call questionsQ.First failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	err = copier.Copy(question, req)
+	if err != nil {
+		wlog.Error("call copier.Copy failed").Err(err).Field("req", req).Log()
+		return err
+	}
+	_, err = questionsTX.Updates(question)
+	if err != nil {
+		wlog.Error("call questionsQ.Updates failed").Err(err).Field("req", req).Log()
+		tx.Rollback()
+		return err
+	}
+	_, err = questionOptionsTX.Where(questionOptionsTX.QuestionID.Eq(req.ID)).Delete()
+	if err != nil {
+		wlog.Error("call questionOptionsTX.Delete failed").Err(err).Field("req", req).Log()
+		tx.Rollback()
+		return err
+	}
+	optionList := make([]*model.QuestionOptions, 0)
+	err = copier.Copy(&optionList, req.Options)
+	if err != nil {
+		wlog.Error("call copier.Copy failed").Err(err).Field("req", req).Log()
+		tx.Rollback()
+		return err
+	}
+	for _, opt := range optionList {
+		opt.QuestionID = req.ID
+	}
+	err = questionOptionsTX.Create(optionList...)
+	if err != nil {
+		wlog.Error("call questionOptionsTX.Create failed").Err(err).Field("req", req).Log()
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+}
+
+func (q *QuestionService) DeleteQuestion(id int) error {
+	_, err := questionsQ.Where(questionsQ.ID.Eq(id)).Delete()
+	if err != nil {
+		wlog.Error("call questionsQ.Delete failed").Err(err).Field("id", id).Log()
+		return err
+	}
+	return nil
 }

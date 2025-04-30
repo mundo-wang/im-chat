@@ -70,7 +70,7 @@ CREATE TABLE `questions` (
   `updated_by` VARCHAR(100) DEFAULT NULL COMMENT '修改人',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除标记（0=未删除，1=已删除）'
+  `deleted_at` datetime COMMENT '逻辑删除标记'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试题表';
 
 CREATE TABLE `question_options` (
@@ -99,7 +99,7 @@ CREATE TABLE `exam_records` (
   `score` INT DEFAULT 0 COMMENT '总得分',
   `remark` VARCHAR(500) COMMENT '考试评语',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
-  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除标记（0=未删除，1=已删除）'
+  `deleted_at` datetime COMMENT '逻辑删除标记'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='考试记录表';
 
 CREATE TABLE `answer_records` (
