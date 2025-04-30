@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mundo-wang/wtool/wlog"
 	"im-chat/service"
+	"strconv"
 )
 
 type QuestionApi struct {
@@ -27,4 +28,19 @@ func (api *QuestionApi) GetQuestionsPage(c *gin.Context) (interface{}, error) {
 		return nil, err
 	}
 	return page, nil
+}
+
+func (api *QuestionApi) GetQuestionInfo(c *gin.Context) (interface{}, error) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		wlog.Error("call strconv.Atoi failed").Err(err).Field("idStr", idStr).Log()
+		return nil, err
+	}
+	resp, err := api.QuestionService.GetQuestionInfo(id)
+	if err != nil {
+		wlog.Error("call api.QuestionService.GetQuestionInfo failed").Err(err).Field("id", id).Log()
+		return nil, err
+	}
+	return resp, nil
 }

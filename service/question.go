@@ -66,3 +66,32 @@ func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.Pag
 	}
 	return page, nil
 }
+
+func (q *QuestionService) GetQuestionInfo(id int) (*GetQuestionInfoResp, error) {
+	question, err := questionsQ.Where(questionsQ.ID.Eq(id)).First()
+	if err != nil {
+		wlog.Error("call questionsQ.First failed").Err(err).Field("id", id).Log()
+		return nil, err
+	}
+	optionList, err := questionOptionsQ.Where(questionOptionsQ.QuestionID.Eq(id)).Find()
+	if err != nil {
+		wlog.Error("call questionOptionsQ.Find failed").Err(err).Field("id", id).Log()
+		return nil, err
+	}
+	resp := &GetQuestionInfoResp{}
+	err = copier.Copy(resp, question)
+	if err != nil {
+		wlog.Error("call copier.Copy failed").Err(err).Field("question", question).Log()
+		return nil, err
+	}
+	if question.Type == utils.QuestionTypeChoice {
+		options := make([]Options, 0)
+		err = copier.Copy(&options, optionList)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("optionList", optionList).Log()
+			return nil, err
+		}
+		resp.Options = options
+	}
+	return resp, nil
+}

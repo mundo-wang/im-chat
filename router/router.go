@@ -57,5 +57,6 @@ func SetRouter(s *wresp.Server) {
 		question.GET("/checkUnpublishedSession", s.WrapHandler(api.GetQuestionSessionApi().CheckUnpublishedSession))
 		question.GET("/getSessionQuestions", s.WrapHandler(api.GetQuestionSessionApi().GetSessionQuestions))
 		question.POST("/getQuestionsPage", s.WrapHandler(api.GetQuestionApi().GetQuestionsPage))
+		question.GET("/getQuestionInfo", s.WrapHandler(api.GetQuestionApi().GetQuestionInfo))
 	}
 }

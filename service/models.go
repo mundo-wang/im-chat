@@ -114,3 +114,19 @@ type GetQuestionPageResp struct {
 	AgentCode  string    `json:"agentCode"`
 	Options    []Options `json:"options"`
 }
+
+type GetQuestionInfoResp struct {
+	ID         int       `json:"id"`
+	Title      string    `json:"title"`
+	Type       int       `json:"type"`
+	Answer     string    `json:"answer"`
+	Options    []Options `json:"options"`
+	Status     int       `json:"status"`
+	AgentCode  string    `json:"agentCode"`
+	PositionID int64     `json:"positionId"`
+	Position   string    `json:"position"`
+	CreatedBy  string    `json:"createdBy"`
+	UpdatedBy  string    `json:"updatedBy"`
+	CreatedAt  time.Time `json:"createdAt"`
+	UpdatedAt  time.Time `json:"updatedAt"`
+}
