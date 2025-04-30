@@ -17,8 +17,8 @@ func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.Pag
 	if req.PositionId != 0 {
 		conds = append(conds, questionsQ.PositionID.Eq(req.PositionId))
 	}
-	if req.Type != -1 {
-		conds = append(conds, questionsQ.Type.Eq(req.Type))
+	if req.Type != nil {
+		conds = append(conds, questionsQ.Type.Eq(*req.Type))
 	}
 	if !req.OperationTimeStart.IsZero() && !req.OperationTimeEnd.IsZero() {
 		conds = append(conds, questionsQ.UpdatedAt.Between(req.OperationTimeStart, req.OperationTimeEnd))

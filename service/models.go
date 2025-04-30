@@ -97,7 +97,7 @@ type GetSessionQuestionsResp struct {
 
 type GetQuestionsPageReq struct {
 	PositionId         int       `json:"positionId"`
-	Type               int       `json:"type"`
+	Type               *int      `json:"type"`
 	OperationTimeStart time.Time `json:"operationTimeStart"`
 	OperationTimeEnd   time.Time `json:"operationTimeEnd"`
 	Page               int       `json:"page"`
