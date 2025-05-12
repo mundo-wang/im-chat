@@ -46,7 +46,7 @@ func ParseJwtToken(jwtToken string) (*UserClaims, error) {
 		})
 	if err != nil {
 		wlog.Error("call jwt.ParseWithClaims failed").Err(err).Field("jwtToken", jwtToken).Log()
-		return nil, err
+		return nil, code.JwtTokenInvalid
 	}
 	claims, ok := token.Claims.(*UserClaims)
 	if ok && token.Valid {
