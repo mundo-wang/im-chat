@@ -50,7 +50,7 @@ type examRecords struct {
 	Score      field.Int    // 总得分
 	Remark     field.String // 考试评语
 	CreatedAt  field.Time   // 提交时间
-	DeletedAt  field.Field  // 逻辑删除标记（0=未删除，1=已删除）
+	DeletedAt  field.Field  // 逻辑删除标记
 
 	fieldMap map[string]field.Expr
 }

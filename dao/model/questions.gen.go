@@ -26,7 +26,7 @@ type Questions struct {
 	UpdatedBy    string         `gorm:"column:updated_by;comment:修改人" json:"updated_by"`                            // 修改人
 	CreatedAt    time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"` // 创建时间
 	UpdatedAt    time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP;comment:更新时间" json:"updated_at"` // 更新时间
-	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;not null;comment:逻辑删除标记" json:"deleted_at"`                // 逻辑删除标记
+	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;comment:逻辑删除标记" json:"deleted_at"`                         // 逻辑删除标记
 }
 
 // TableName Questions's table name

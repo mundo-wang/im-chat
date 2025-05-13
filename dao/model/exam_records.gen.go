@@ -20,7 +20,7 @@ type ExamRecords struct {
 	Score      int            `gorm:"column:score;comment:总得分" json:"score"`                                      // 总得分
 	Remark     string         `gorm:"column:remark;comment:考试评语" json:"remark"`                                   // 考试评语
 	CreatedAt  time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP;comment:提交时间" json:"created_at"` // 提交时间
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;not null;comment:逻辑删除标记（0=未删除，1=已删除）" json:"deleted_at"`   // 逻辑删除标记（0=未删除，1=已删除）
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;comment:逻辑删除标记" json:"deleted_at"`                         // 逻辑删除标记
 }
 
 // TableName ExamRecords's table name
