@@ -89,3 +89,18 @@ func (api *QuestionApi) FetchRandomQuestions(c *gin.Context) (interface{}, error
 	}
 	return resp, nil
 }
+
+func (api *QuestionApi) CalculateScore(c *gin.Context) (interface{}, error) {
+	req := &service.CalculateScoreReq{}
+	err := c.ShouldBindJSON(req)
+	if err != nil {
+		wlog.Error("call c.ShouldBindJSON failed").Err(err).Log()
+		return nil, err
+	}
+	resp, err := api.QuestionService.CalculateScore(c, req)
+	if err != nil {
+		wlog.Error("call api.QuestionService.CalculateScore failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return resp, nil
+}

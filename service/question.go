@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
 	"gorm.io/gen"
@@ -184,4 +185,80 @@ func (q *QuestionService) FetchRandomQuestions(positionId, count int) ([]FetchRa
 		respList = append(respList, resp)
 	}
 	return respList, nil
+}
+
+// todo：事务方面尚未处理
+func (q *QuestionService) CalculateScore(c *gin.Context, req *CalculateScoreReq) (*CalculateScoreResp, error) {
+	examRecord := &model.ExamRecords{
+		UserID:     utils.GetUserId(c),
+		PositionID: req.PositionID,
+	}
+	err := examRecordsQ.Create(examRecord)
+	if err != nil {
+		wlog.Error("call examRecordsQ.Create failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	score := 0
+	answerList := make([]Answer, 0)
+	for _, questionAnswer := range req.QuestionAnswerList {
+		questionNo := questionAnswer.QuestionNo
+		questionID := questionAnswer.QuestionID
+		userAnswer := questionAnswer.UserAnswer
+		question, err := questionsQ.Where(questionsQ.ID.Eq(questionID)).First()
+		if err != nil {
+			wlog.Error("call questionsQ.First failed").Err(err).Field("req", req).Log()
+			return nil, err
+		}
+		answer := Answer{
+			QuestionNo:    questionNo,
+			QuestionID:    questionID,
+			Title:         question.Title,
+			UserAnswer:    userAnswer,
+			CorrectAnswer: question.Answer,
+			Type:          question.Type,
+		}
+		answerRecord := &model.AnswerRecords{}
+		if userAnswer == question.Answer {
+			score += 10
+			answer.IsCorrect = true
+			answerRecord.IsCorrect = 1
+		}
+		err = copier.Copy(answerRecord, answer)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("questionAnswer", questionAnswer).Log()
+			return nil, err
+		}
+		answerRecord.ExamID = examRecord.ID
+		err = answerRecordsQ.Create(answerRecord)
+		if err != nil {
+			wlog.Error("call answerRecordsQ.Create failed").Err(err).Field("answerRecord", answerRecord).Log()
+			return nil, err
+		}
+		optionList, err := questionOptionsQ.Where(questionOptionsQ.QuestionID.Eq(questionID)).Find()
+		if err != nil {
+			wlog.Error("call questionOptionsQ.Find failed").Err(err).Field("questionAnswer", questionAnswer).Log()
+			return nil, err
+		}
+		options := make([]Options, 0)
+		err = copier.Copy(&options, optionList)
+		if err != nil {
+			wlog.Error("call copier.Copy failed").Err(err).Field("questionAnswer", questionAnswer).Log()
+			return nil, err
+		}
+		answer.Options = options
+		answerList = append(answerList, answer)
+	}
+	resp := &CalculateScoreResp{
+		Score:   score,
+		Answers: answerList,
+		ExamID:  examRecord.ID,
+	}
+	examRecord.Score = score
+	examRecord.Remark = "继续努力"
+	_, err = examRecordsQ.Updates(examRecord)
+	if err != nil {
+		wlog.Error("call examRecordsQ.Updates failed").Err(err).Field("req", req).Log()
+		return nil, err
+	}
+	return resp, nil
 }

@@ -151,3 +151,31 @@ type FetchRandomQuestionsResp struct {
 	Type    int       `json:"type"`
 	Options []Options `json:"options"`
 }
+
+type CalculateScoreReq struct {
+	PositionID         int              `json:"positionId"`
+	QuestionAnswerList []QuestionAnswer `json:"questionAnswerList"`
+}
+
+type QuestionAnswer struct {
+	QuestionNo int    `json:"questionNo"`
+	QuestionID int    `json:"questionId"`
+	UserAnswer string `json:"userAnswer"`
+}
+
+type CalculateScoreResp struct {
+	ExamID  int      `json:"examId"`
+	Score   int      `json:"score"`
+	Answers []Answer `json:"answers"`
+}
+
+type Answer struct {
+	QuestionNo    int       `json:"questionNo"`
+	QuestionID    int       `json:"questionId"`
+	Title         string    `json:"title"`
+	UserAnswer    string    `json:"userAnswer"`
+	CorrectAnswer string    `json:"correctAnswer"`
+	IsCorrect     bool      `json:"isCorrect"`
+	Type          int       `json:"type"`
+	Options       []Options `json:"options"`
+}

@@ -61,5 +61,6 @@ func SetRouter(s *wresp.Server) {
 		question.POST("/updateQuestion", s.WrapHandler(api.GetQuestionApi().UpdateQuestion))
 		question.GET("/deleteQuestion", s.WrapHandler(api.GetQuestionApi().DeleteQuestion))
 		question.GET("/fetchRandomQuestions", s.WrapHandler(api.GetQuestionApi().FetchRandomQuestions))
+		question.POST("/calculateScore", s.WrapHandler(api.GetQuestionApi().CalculateScore))
 	}
 }
