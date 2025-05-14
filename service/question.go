@@ -16,7 +16,7 @@ type QuestionService struct {
 }
 
 func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.PageResult[GetQuestionPageResp], error) {
-	conds := []gen.Condition{}
+	conds := make([]gen.Condition, 0)
 	conds = append(conds, questionsQ.Status.Eq(utils.QuestionStatusPublished))
 	if req.PositionId != 0 {
 		conds = append(conds, questionsQ.PositionID.Eq(req.PositionId))
@@ -187,7 +187,6 @@ func (q *QuestionService) FetchRandomQuestions(positionId, count int) ([]FetchRa
 	return respList, nil
 }
 
-// todo：事务方面尚未处理
 func (q *QuestionService) CalculateScore(c *gin.Context, req *CalculateScoreReq) (*CalculateScoreResp, error) {
 	examRecord := &model.ExamRecords{
 		UserID:     utils.GetUserId(c),
