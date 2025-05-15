@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"github.com/mundo-wang/wtool/wlog"
@@ -232,7 +231,6 @@ func (q *QuestionService) CalculateScore(c *gin.Context, req *CalculateScoreReq)
 				wlog.Error("call copier.Copy failed").Err(err).Field("questionAnswer", questionAnswer).Log()
 				return err
 			}
-			return errors.New("模拟一个错误")
 			answerRecord.ExamID = examRecord.ID
 			err = answerRecordsTX.Create(answerRecord)
 			if err != nil {
