@@ -17,7 +17,7 @@ type QuestionService struct {
 }
 
 func (q *QuestionService) GetQuestionsPage(req *GetQuestionsPageReq) (*utils.PageResult[GetQuestionPageResp], error) {
-	conds := []gen.Condition{}
+	conds := make([]gen.Condition, 0)
 	conds = append(conds, questionsQ.Status.Eq(utils.QuestionStatusPublished))
 	if req.PositionId != 0 {
 		conds = append(conds, questionsQ.PositionID.Eq(req.PositionId))
