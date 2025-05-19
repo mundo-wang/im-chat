@@ -80,10 +80,10 @@ func (q *QuestionSessionService) GenerateQuestions(c *gin.Context, req *Generate
 	return nil
 }
 
-func (q *QuestionSessionService) CheckUnpublishedSession(c *gin.Context) string {
+func (q *QuestionSessionService) CheckUnpublishedSession(userName string) string {
 	questionSession, err := questionSessionQ.Where(
 		questionSessionQ.Status.In(utils.GenerateStatusGenerating, utils.GenerateStatusGenerated),
-		questionSessionQ.CreatedBy.Eq(utils.GetUserName(c))).Order(questionSessionQ.CreatedAt.Desc()).First()
+		questionSessionQ.CreatedBy.Eq(userName)).Order(questionSessionQ.CreatedAt.Desc()).First()
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		return ""
 	} else {

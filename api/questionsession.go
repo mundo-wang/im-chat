@@ -8,6 +8,7 @@ import (
 )
 
 type QuestionSessionApi struct {
+	BaseApi
 	service.QuestionSessionService
 }
 
@@ -33,7 +34,8 @@ func (api *QuestionSessionApi) GenerateQuestions(c *gin.Context) error {
 }
 
 func (api *QuestionSessionApi) CheckUnpublishedSession(c *gin.Context) (interface{}, error) {
-	sessionId := api.QuestionSessionService.CheckUnpublishedSession(c)
+	userName := api.GetUserName(c)
+	sessionId := api.QuestionSessionService.CheckUnpublishedSession(userName)
 	if sessionId != "" {
 		return sessionId, nil
 	} else {
