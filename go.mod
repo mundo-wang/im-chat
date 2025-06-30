@@ -1,12 +1,13 @@
 module im-chat
 
-go 1.21.8
+go 1.23.9
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/google/uuid v1.6.0
+	github.com/jinzhu/copier v0.4.0
 	github.com/mundo-wang/wtool v1.0.10
 	github.com/spf13/viper v1.20.0
 	gorm.io/driver/mysql v1.4.4
@@ -31,7 +32,6 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
