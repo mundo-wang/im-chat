@@ -6,6 +6,7 @@ type Config struct {
 	Timeout TimeoutConfig `mapstructure:"timeout"`
 	Server  ServerConfig  `mapstructure:"server"`
 	Jwt     JwtConfig     `mapstructure:"jwt"`
+	Minio   MinioConfig   `mapstructure:"minio"`
 }
 
 type MySQLConfig struct {
@@ -39,4 +40,12 @@ type ServerConfig struct {
 
 type JwtConfig struct {
 	SecretKey string `mapstructure:"secretKey"`
+}
+
+type MinioConfig struct {
+	AccessKey string `mapstructure:"accessKey"`
+	SecretKey string `mapstructure:"secretKey"`
+	Bucket    string `mapstructure:"bucket"`
+	Endpoint  string `mapstructure:"endpoint"`
+	UseSSL    bool   `mapstructure:"useSSL"`
 }

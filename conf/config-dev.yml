@@ -25,3 +25,10 @@ server:
 
 jwt:
   secretKey: "f8a20475-0411-42e8-a816-e7d17a0be3c5"
+
+minio:
+  endpoint: "123.60.188.152:9000"
+  accessKey: "5lIUJj5y6wbQT2ydr238"
+  secretKey: "Jqom6heF0f6CQVpKhQdX3sJEyegdTJ7iba33jSMo"
+  bucket: "mundo-bucket"
+  useSSL: false  # 表示是否通过HTTPS而不是HTTP与服务端通信
