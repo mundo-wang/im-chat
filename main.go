@@ -6,14 +6,14 @@ import (
 	"github.com/mundo-wang/wtool/wlog"
 	"github.com/mundo-wang/wtool/wresp"
 	"im-chat/cmd/db"
+	"im-chat/conf"
 	"im-chat/dao/query"
 	"im-chat/router"
 	"im-chat/service"
-	"im-chat/utils"
 )
 
 func main() {
-	err := utils.InitConfig()
+	err := conf.InitConfig()
 	if err != nil {
 		wlog.Error("call utils.InitConfig failed").Err(err).Log()
 		return
@@ -22,9 +22,9 @@ func main() {
 	service.InitDao()
 	wlog.Info("InitMySQL complete!").Log()
 	s := NewServer()
-	err = s.Router.Run(fmt.Sprintf(":%d", utils.Config.Server.Port))
+	err = s.Router.Run(fmt.Sprintf(":%d", conf.Config.Server.Port))
 	if err != nil {
-		wlog.Error("call r.Run failed").Err(err).Field("serverPort", utils.Config.Server.Port).Log()
+		wlog.Error("call r.Run failed").Err(err).Field("serverPort", conf.Config.Server.Port).Log()
 		return
 	}
 }

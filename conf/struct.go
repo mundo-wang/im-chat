@@ -1,6 +1,6 @@
 package conf
 
-type Config struct {
+type YamlConfig struct {
 	MySQL   MySQLConfig   `mapstructure:"mysql"`
 	Redis   RedisConfig   `mapstructure:"redis"`
 	Timeout TimeoutConfig `mapstructure:"timeout"`

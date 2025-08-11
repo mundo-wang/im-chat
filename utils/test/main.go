@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/minio/minio-go/v7"
 	"github.com/mundo-wang/wtool/wlog"
+	"im-chat/conf"
 	"im-chat/utils"
 	"im-chat/utils/wresp"
 	"io"
@@ -18,7 +19,7 @@ import (
 )
 
 func main() {
-	err := utils.InitConfig()
+	err := conf.InitConfig()
 	if err != nil {
 		wlog.Fatal("call utils.InitConfig failed").Err(err).Log()
 	}
@@ -45,7 +46,7 @@ func PutFile(c *gin.Context) {
 	srcFile, _ := file.Open()
 	defer srcFile.Close()
 	// 获取minio客户端对象
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 上传文件到MinIO
 	fmt.Println(file.Header.Get("Content-Type"))
@@ -64,7 +65,7 @@ func FPutFile(c *gin.Context) {
 	contentType := mime.TypeByExtension(ext)
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	objectName := fmt.Sprintf("images/%d%05d%s", time.Now().UnixMilli(), rnd.Intn(100000), ext)
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	_, _ = minioClient.FPutObject(c.Request.Context(), bucketName, objectName, filePath, minio.PutObjectOptions{
 		ContentType: contentType,
@@ -75,7 +76,7 @@ func FPutFile(c *gin.Context) {
 func GetFile(c *gin.Context) {
 	// 获取请求参数中的对象名
 	objectName := c.Query("object-name")
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	object, err := minioClient.GetObject(c.Request.Context(), bucketName, objectName, minio.GetObjectOptions{})
 	if err != nil {
@@ -97,7 +98,7 @@ func GetFile(c *gin.Context) {
 
 func DeleteFile(c *gin.Context) {
 	objectName := c.Query("object-name")
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 删除对象为幂等操作，即使objectName不存在，也不会返回error
 	_ = minioClient.RemoveObject(c.Request.Context(), bucketName, objectName, minio.RemoveObjectOptions{})
@@ -108,7 +109,7 @@ func CopyFile(c *gin.Context) {
 	// 获取源对象和目标对象名称
 	srcObjectName := c.Query("src-object-name")
 	dstObjectName := c.Query("dst-object-name")
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 构建源对象的配置信息
 	src := minio.CopySrcOptions{
@@ -128,7 +129,7 @@ func CopyFile(c *gin.Context) {
 func ListFilesName(c *gin.Context) {
 	// 获取筛选对象Key的前缀，可为空，空则列出所有对象
 	prefix := c.Query("prefix")
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 构建对象列举配置项
 	opts := minio.ListObjectsOptions{
@@ -144,7 +145,7 @@ func ListFilesName(c *gin.Context) {
 
 func GetFileStat(c *gin.Context) {
 	objectName := c.Query("object-name")
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 获取对象的元信息
 	info, err := minioClient.StatObject(c.Request.Context(), bucketName, objectName, minio.StatObjectOptions{})
@@ -167,7 +168,7 @@ func PresignGetURL(c *gin.Context) {
 	objectName := c.Query("object-name")
 	expireStr := c.DefaultQuery("expire-seconds", "3600") // 默认过期时间：1小时
 	expireSeconds, _ := strconv.Atoi(expireStr)
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	reqParams := make(url.Values)
 	// 如果想在访问预签名URL时触发浏览器下载，设置该响应头参数
@@ -187,7 +188,7 @@ func PresignPutURL(c *gin.Context) {
 	objectName := c.Query("object-name")
 	expireStr := c.DefaultQuery("expire-seconds", "3600") // 默认过期时间：1小时
 	expireSeconds, _ := strconv.Atoi(expireStr)
-	bucketName := utils.Config.Minio.Bucket
+	bucketName := conf.Config.Minio.Bucket
 	minioClient, _ := utils.NewMinioClient(bucketName)
 	// 生成预签名上传URL（PUT方式）
 	presignedURL, _ := minioClient.PresignedPutObject(

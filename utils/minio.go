@@ -5,6 +5,7 @@ import (
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/mundo-wang/wtool/wlog"
+	"im-chat/conf"
 	"sync"
 )
 
@@ -16,9 +17,9 @@ var (
 func NewMinioClient(bucketName string) (*minio.Client, error) {
 	minioOnce.Do(func() {
 		var err error
-		minioClient, err = minio.New(Config.Minio.Endpoint, &minio.Options{
-			Creds:  credentials.NewStaticV4(Config.Minio.AccessKey, Config.Minio.SecretKey, ""),
-			Secure: Config.Minio.UseSSL,
+		minioClient, err = minio.New(conf.Config.Minio.Endpoint, &minio.Options{
+			Creds:  credentials.NewStaticV4(conf.Config.Minio.AccessKey, conf.Config.Minio.SecretKey, ""),
+			Secure: conf.Config.Minio.UseSSL,
 		})
 		if err != nil {
 			wlog.Fatal("call minio.New failed").Err(err).Log()

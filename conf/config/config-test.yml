@@ -1,0 +1,34 @@
+mysql:
+  userName: "root"
+  password: "P@7z#L&2*K!W8%X"
+  ip: "123.60.188.152"
+  port: 3306
+  dbName: "imchat"
+
+redis:
+  ip: "123.60.188.152"
+  port: 6379
+  password: "F!9@L#4&X%7q*P6"
+  DB: 0
+  poolSize: 30
+  minIdleConn: 30
+
+timeout:
+  delayHeartbeat: 3
+  heartbeatHz: 30
+  heartbeatMaxTime: 30000
+  redisOnlineTime: 4
+
+server:
+  port: 8280
+  udp: 3001
+
+jwt:
+  secretKey: "f8a20475-0411-42e8-a816-e7d17a0be3c5"
+
+minio:
+  endpoint: "123.60.188.152:9000"
+  accessKey: "5lIUJj5y6wbQT2ydr238"
+  secretKey: "Jqom6heF0f6CQVpKhQdX3sJEyegdTJ7iba33jSMo"
+  bucket: "mundo-bucket"
+  useSSL: false  # 表示是否通过HTTPS而不是HTTP与服务端通信

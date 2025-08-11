@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/mundo-wang/wtool/wlog"
 	"im-chat/code"
+	"im-chat/conf"
 	"time"
 )
 
@@ -16,7 +17,7 @@ type UserClaims struct {
 }
 
 func GenerateJwtToken(userId int, userName, phone string) (string, error) {
-	jwtKey := Config.Jwt.SecretKey
+	jwtKey := conf.Config.Jwt.SecretKey
 	claims := &UserClaims{
 		UserID:   userId,
 		UserName: userName,
@@ -39,7 +40,7 @@ func GenerateJwtToken(userId int, userName, phone string) (string, error) {
 }
 
 func ParseJwtToken(jwtToken string) (*UserClaims, error) {
-	jwtKey := Config.Jwt.SecretKey
+	jwtKey := conf.Config.Jwt.SecretKey
 	token, err := jwt.ParseWithClaims(jwtToken, &UserClaims{},
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(jwtKey), nil // 返回用于生成jwtToken时的密钥

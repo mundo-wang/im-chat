@@ -5,11 +5,11 @@ import (
 	"gorm.io/gen"
 	"gorm.io/gorm"
 	"im-chat/cmd/db"
-	"im-chat/utils"
+	"im-chat/conf"
 )
 
 func main() {
-	err := utils.InitConfig()
+	err := conf.InitConfig()
 	if err != nil {
 		wlog.Fatal("call utils.InitConfig failed").Err(err).Log()
 	}

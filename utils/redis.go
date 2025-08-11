@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"im-chat/conf"
 	"sync"
 )
 
@@ -14,11 +15,11 @@ var (
 func NewRedisClient() *redis.Client {
 	redisOnce.Do(func() {
 		redisClient = redis.NewClient(&redis.Options{
-			Addr:         fmt.Sprintf("%s:%d", Config.Redis.IP, Config.Redis.Port),
-			Password:     Config.Redis.Password,
-			DB:           Config.Redis.DB,
-			PoolSize:     Config.Redis.PoolSize,
-			MinIdleConns: Config.Redis.MinIdleConn,
+			Addr:         fmt.Sprintf("%s:%d", conf.Config.Redis.IP, conf.Config.Redis.Port),
+			Password:     conf.Config.Redis.Password,
+			DB:           conf.Config.Redis.DB,
+			PoolSize:     conf.Config.Redis.PoolSize,
+			MinIdleConns: conf.Config.Redis.MinIdleConn,
 		})
 	})
 	return redisClient

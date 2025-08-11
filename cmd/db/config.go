@@ -7,15 +7,15 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"im-chat/utils"
+	"im-chat/conf"
 )
 
 func GetDB() *gorm.DB {
-	userName := utils.Config.MySQL.UserName
-	password := utils.Config.MySQL.Password
-	ip := utils.Config.MySQL.IP
-	port := utils.Config.MySQL.Port
-	dbName := utils.Config.MySQL.DBName
+	userName := conf.Config.MySQL.UserName
+	password := conf.Config.MySQL.Password
+	ip := conf.Config.MySQL.IP
+	port := conf.Config.MySQL.Port
+	dbName := conf.Config.MySQL.DBName
 	dsnFmt := "%v:%v@(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := fmt.Sprintf(dsnFmt, userName, password, ip, port, dbName)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
